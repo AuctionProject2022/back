@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProductController {
 
 	@GetMapping("/2148124581258")
-	public SuccessResponse<Page<MemberGetResponse>> getMembers(final Pageable pageable, final MemberGetRequest memberGetRequest) {
-		return null;
+	public String getMembers(final Pageable pageable, final MemberGetRequest memberGetRequest) {
+		return "";
 	}
 }
