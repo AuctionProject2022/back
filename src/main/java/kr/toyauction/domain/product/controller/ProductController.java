@@ -17,15 +17,24 @@ public class ProductController {
 
         String result = "{\n" +
                         "  \"success\": \"true\",\n" +
-                        "  \"data\": [\n" +
-                        "    {\n" +
-                        "      \"image\": [\n" +
-                        "        \"IMG0001\",\n" +
-                        "        \"IMG0002\",\n" +
-                        "        \"IMG0003\"\n" +
+                        "  \"data\": {\n" +
+                        "      \"productId\": 1,\n" +
+                        "      \"images\": [\n" +
+                        "        {\n" +
+                        "          \"imageId\": \"IMG00001\",\n" +
+                        "          \"imageUrl\": \"https://example.com/IMG00001.png\"\n" +
+                        "        },\n" +
+                        "\t\t{\n" +
+                        "          \"imageId\": \"IMG00002\",\n" +
+                        "          \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
+                        "        }\n" +
                         "      ],\n" +
+                        "\t  \"thumbnailImage\" : {\n" +
+                        "          \"imageId\": \"IMG00002\",\n" +
+                        "          \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
+                        "        },\n" +
                         "      \"productName\": \"Nike Air Zoom Iorem lorem lorem Pegasus 36 Miami\",\n" +
-                        "      \"minPrice\": 10000,\n" +
+                        "      \"minBidPrice\": 10000,\n" +
                         "      \"rightPrice\": 38000,\n" +
                         "      \"startSaleDateTime\": \"2022-06-19 21:48:55\",\n" +
                         "      \"endSaleDateTime\": \"2022-06-19 21:48:55\",\n" +
@@ -56,7 +65,6 @@ public class ProductController {
                         "      \"updateDatetime\": \"2022-06-19 21:48:55\",\n" +
                         "      \"enabled\": \"true\"\n" +
                         "    }\n" +
-                        "  ]\n" +
                         "}";
 
         return result;
