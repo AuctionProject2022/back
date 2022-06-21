@@ -17,14 +17,14 @@ logging:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://auction.c38ary0y4f5o.ap-northeast-2.rds.amazonaws.com/toy?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://toydb.c38ary0y4f5o.ap-northeast-2.rds.amazonaws.com/toy?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin
-    password: ${DB.PASSWORD}
+    password: ${db_password}
   jpa:
     open-in-view: false # 지연 로딩을 Controller 까지 확장 하는것 을 금지 한다. 자세한 내용은 OSIV 패턴 참고
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # mysql DB engine
     hibernate:
-      ddl-auto: validate # DDL AUTO 전략
+      ddl-auto: update # DDL AUTO 전략
     properties:
       hibernate:
         format_sql: true # sql query pretty option
