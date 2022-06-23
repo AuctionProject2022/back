@@ -3,6 +3,7 @@ package kr.toyauction.domain.product.controller;
 import kr.toyauction.domain.product.property.ProductPath;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,6 +67,16 @@ public class ProductController {
                         "    \"updateDatetime\": \"2022-06-19 21:48:55\",\n" +
                         "    \"enabled\": \"true\"\n" +
                         "  }\n" +
+                        "}";
+
+        return result;
+    }
+
+    @DeleteMapping(ProductPath.PRODUCTS + "/{productId}")
+    public String deleteProduct(@PathVariable final Long productId) {
+        String result = "{\n" +
+                        "  \"success\": \"true\",\n" +
+                        "  \"data\": {}\n" +
                         "}";
 
         return result;
