@@ -23,9 +23,6 @@ import io.jsonwebtoken.security.Keys;
 public class JwtProvider implements InitializingBean {
 	private final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-	@Value("${jwt.json_key}")
-	private String jsonKey;
-
 	@Value("${jwt.secret}")
 	private String secret;
 
@@ -40,7 +37,7 @@ public class JwtProvider implements InitializingBean {
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	public String createAccessToken(Authentication authentication) {
+	public String createToken(Authentication authentication) {
 		String authorities = authentication.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
@@ -53,7 +50,7 @@ public class JwtProvider implements InitializingBean {
 		// build token
 		return Jwts.builder()
 				.setSubject(authentication.getName())
-				.claim(jsonKey, authorities)
+				.claim("", authorities)
 				.signWith(key, SignatureAlgorithm.HS512)
 				.setExpiration(validity)
 				.compact();
@@ -68,7 +65,7 @@ public class JwtProvider implements InitializingBean {
 				.getBody();
 
 		Collection<? extends GrantedAuthority> authorities =
-				Arrays.stream(claims.get(jsonKey).toString().split(","))
+				Arrays.stream(claims.get("").toString().split(","))
 						.map(SimpleGrantedAuthority::new)
 						.collect(Collectors.toList());
 

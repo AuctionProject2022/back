@@ -1,5 +1,6 @@
 package kr.toyauction.domain.member.entity;
 
+import kr.toyauction.domain.member.enums.Role;
 import kr.toyauction.global.entity.BaseEntity;
 import kr.toyauction.global.entity.EntitySupport;
 import kr.toyauction.global.exception.DomainValidationException;
@@ -7,10 +8,7 @@ import kr.toyauction.global.property.Regex;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Slf4j
 @Getter
@@ -21,22 +19,26 @@ import javax.persistence.Id;
 public class Member extends BaseEntity implements EntitySupport {
 
     @Id
+    @Column(name = "memberId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String userId;
+
+    @Column(unique = true)
     private String username;
 
-    private String password;
+    @Column
+    private String picture;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @Override
     public void validation() {
         if (username == null || !username.matches(Regex.USERNAME)) {
-            log.error("username : {}", username);
-            throw new DomainValidationException();
-        }
-
-        if (password == null || !password.matches(Regex.PASSWORD)) {
-            log.error("password : {}", password);
+            log.error("nickname : {}", username);
             throw new DomainValidationException();
         }
     }
@@ -45,7 +47,4 @@ public class Member extends BaseEntity implements EntitySupport {
         this.username = username;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

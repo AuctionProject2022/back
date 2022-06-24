@@ -1,0 +1,49 @@
+package kr.toyauction.domain.member.dto;
+
+import kr.toyauction.domain.member.entity.Member;
+import kr.toyauction.domain.member.enums.Role;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.Map;
+
+@Getter
+public class GoogleRequest {
+    private Map<String, Object> attributes;
+    private String nameAttributeKey;
+    private String name;
+    private String email;
+    private String picture;
+
+    @Builder
+    public GoogleRequest(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture){
+        this.attributes = attributes;
+        this.nameAttributeKey = nameAttributeKey;
+        this.name = name;
+        this.email = email;
+        this.picture = picture;
+    }
+
+    public static GoogleRequest of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+        return ofGoole(userNameAttributeName, attributes);
+    }
+
+    private static GoogleRequest ofGoole(String userNameAttributeName, Map<String, Object> attributes){
+        return GoogleRequest.builder()
+                .name((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .picture((String) attributes.get("picture"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    public Member toEntity() {
+        return Member.builder()
+                .userId(email)
+                .username(name)
+                .picture(picture)
+                .role(Role.GUEST)
+                .build();
+    }
+}
