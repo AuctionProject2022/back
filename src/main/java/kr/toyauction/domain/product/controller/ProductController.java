@@ -75,8 +75,7 @@ public class ProductController {
     @DeleteMapping(ProductPath.PRODUCTS + "/{productId}")
     public String deleteProduct(@PathVariable final Long productId) {
         String result = "{\n" +
-                        "  \"success\": \"true\",\n" +
-                        "  \"data\": {}\n" +
+                        "  \"success\": \"true\"\n" +
                         "}";
 
         return result;
