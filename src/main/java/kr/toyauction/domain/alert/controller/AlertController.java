@@ -4,6 +4,7 @@ import kr.toyauction.domain.alert.property.AlertPath;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -107,6 +108,50 @@ public class AlertController {
                 "\t\t\"numberOfElements\": 5,\t\t// 현재 페이지에 조회한 데이터 개수\n" +
                 "\t\t\"size\": 15,\n" +
                 "\t\t\"empty\": false\n" +
+                "\t}\n" +
+                "}";
+    }
+
+    @GetMapping(AlertPath.ALERTS+"/{alertId}")
+    public String getAlert(@PathVariable final Long alertId){
+        return "{\n" +
+                "\t\"success\" : \"true\",\n" +
+                "\t\"data\" : {\n" +
+                "\t\t\"alertTitle\": {\n" +
+                "\t\t\t\"code\" : \"A01\"\n" +
+                "\t\t\t\"name\" : \"경매 성공\"\n" +
+                "\t\t},\n" +
+                "\t\t\"time\" : \"2021-06-10 12:45:45\",\n" +
+                "\t\t\"moneyComment\" : \"총 낙찰금액\"\n" +
+                "\t\t\"money\" : 80000,\n" +
+                "\t\t\"productTitle\" : \"이케아에서 사온 파도 조명 작은 것 한개와 홀더까지 같이 세트로 묶어서 팝니다\",\n" +
+                "\t\t\"bidDetails\" : [\n" +
+                "\t\t\t{\"order\" : 1, \"hopeMoney\" : 20000, \"time\" : \"2일 15시 8분 34초\"},\n" +
+                "\t\t\t{\"order\" : 2, \"hopeMoney\" : 30000, \"time\" : \"2일 15시 8분 34초\"},\n" +
+                "\t\t\t{\"order\" : 3, \"hopeMoney\" : 40000, \"time\" : \"2일 15시 8분 34초\"},\n" +
+                "\t\t\t{\"order\" : 4, \"hopeMoney\" : 50000, \"time\" : \"2일 15시 8분 34초\"},\n" +
+                "\t\t\t{\"order\" : 5, \"hopeMoney\" : 60000, \"time\" : \"2일 15시 8분 34초\"},\n" +
+                "\t\t\t{\"order\" : 6, \"hopeMoney\" : 70000, \"time\" : \"2일 15시 8분 34초\"},\n" +
+                "\t\t\t{\"order\" : 7, \"hopeMoney\" : 80000, \"time\" : \"2일 15시 8분 34초\"}\n" +
+                "\t\t],\n" +
+                "\t\t\"productInfomation\" : {\n" +
+                "\t\t\t\"option\" : {\n" +
+                "\t\t\t\tcode : \"정해주세요\"\n" +
+                "\t\t\t\tname : \"직거래\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t\"buyTime\" : {\n" +
+                "\t\t\t\tcode : \"정해주세요\"\n" +
+                "\t\t\t\tname : \"1~2년 이내\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t\"status\" : {\n" +
+                "\t\t\t\tcode : \"정해주세요\"\n" +
+                "\t\t\t\tname : \"사용감 있음\"\n" +
+                "\t\t\t},\n" +
+                "\t\t\t\"exchangeable\" : {\n" +
+                "\t\t\t\tcode : \"정해주세요\"\n" +
+                "\t\t\t\tname : \"교환불가\"\n" +
+                "\t\t\t}\n" +
+                "\t\t}\n" +
                 "\t}\n" +
                 "}";
     }
