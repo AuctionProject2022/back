@@ -19,69 +19,51 @@ public class AlertController {
                 "\t\t\"content\" : [\n" +
                 "\t\t\t{\n" +
                 "\t\t\t\t\"alertId\" : 12,\n" +
-                "\t\t\t\t\"productId\" : 1,\n" +
-                "\t\t\t\t\"alertTitle\" : {\n" +
-                "\t\t\t\t\t\"code\" : \"A01\"\n" +
-                "\t\t\t\t\t\"name\" : \"경매 성공\"\t// 구매\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매에\\n <span style=\"color:#FF6495ED\">내 경매가 38,000원 낙찰완료<span> 되었습니다.\"\n" +
-                "\t\t\t\t\"time\" : \"2022-08-03 22:03:16\",\n" +
-                "\t\t\t\t\"url\" : \"/front/alert/detail/url/알려주세요/12\"\n" +
+                "\t\t\t\t\"alertTitle\" : \"경매 성공\",\n" +
+                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매에\\n <span style=\"color:#FF6495ED\">내 경매가 38,000원 낙찰완료<span> 되었습니다.\",\n" +
+                "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
+                "\t\t\t\t\"url\" : \"/프론트url/product/12\",\n" +
+                "\t\t\t\t\"alertRead\" : false\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
                 "\t\t\t\t\"alertId\" : 15,\n" +
-                "\t\t\t\t\"productId\" : 11,\n" +
-                "\t\t\t\t\"alertTitle\" : {\n" +
-                "\t\t\t\t\t\"code\" : \"A02\"\n" +
-                "\t\t\t\t\t\"name\" : \"경매 실패\"\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매에\\n <span style=\"color:#FF0000\">내 경매가 38,000원 낙찰실패<span> 하였습니다.\\n<span style=\"color:#FF0000\">최종 낙찰가는 56,000원<span> 입니다.\"\n" +
-                "\t\t\t\t\"time\" : \"2022-08-03 22:03:16\",\n" +
-                "\t\t\t\t\"url\" : \"/front/alert/detail/url/알려주세요/15\"\n" +
+                "\t\t\t\t\"alertTitle\" : \"경매 실패\",\n" +
+                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매에\\n <span style=\"color:#FF0000\">내 경매가 38,000원 낙찰실패<span> 하였습니다.\\n<span style=\"color:#FF0000\">최종 낙찰가는 56,000원<span> 입니다.\",\n" +
+                "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
+                "\t\t\t\t\"url\" : \"/프론트url/product/123\",\n" +
+                "\t\t\t\t\"alertRead\" : false\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
                 "\t\t\t\t\"alertId\" : 112,\n" +
-                "\t\t\t\t\"productId\" : 17,\n" +
-                "\t\t\t\t\"alertTitle\" : {\n" +
-                "\t\t\t\t\t\"code\" : \"A03\"\n" +
-                "\t\t\t\t\t\"name\" : \"구매 응찰 완료\"\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매에\\n <span style=\"color:#FF6495ED\">내 경매가 38,000원 응찰완료<span> 되었습니다.\"\n" +
-                "\t\t\t\t\"time\" : \"2022-08-03 22:03:16\",\n" +
-                "\t\t\t\t\"url\" : \"/front/alert/detail/url/알려주세요/112\"\n" +
+                "\t\t\t\t\"alertTitle\" : \"구매 응찰 완료\",\n" +
+                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매에\\n <span style=\"color:#FF6495ED\">내 경매가 38,000원 응찰완료<span> 되었습니다.\",\n" +
+                "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
+                "\t\t\t\t\"url\" : \"/프론트url/product/122\",\n" +
+                "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
                 "\t\t\t\t\"alertId\" : 152,\n" +
-                "\t\t\t\t\"productId\" : 111,\n" +
-                "\t\t\t\t\"alertTitle\" : {\n" +
-                "\t\t\t\t\t\"code\" : \"A04\"\n" +
-                "\t\t\t\t\t\"name\" : \"경매 성공\" \t// 판매\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매가\\n <span style=\"color:#FF6495ED\">내 경매가 38,000원 낙찰완료<span> 되었습니다.\"\n" +
-                "\t\t\t\t\"time\" : \"2022-08-03 22:03:16\",\n" +
-                "\t\t\t\t\"url\" : \"/front/alert/detail/url/알려주세요/152\"\n" +
+                "\t\t\t\t\"alertTitle\" : \"경매 성공\",\n" +
+                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매가\\n <span style=\"color:#FF6495ED\">내 경매가 38,000원 낙찰완료<span> 되었습니다.\",\n" +
+                "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
+                "\t\t\t\t\"url\" : \"/프론트url/product/112\",\n" +
+                "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
                 "\t\t\t\t\"alertId\" : 222,\n" +
-                "\t\t\t\t\"productId\" : 112,\n" +
-                "\t\t\t\t\"alertTitle\" : {\n" +
-                "\t\t\t\t\t\"code\" : \"A05\"\n" +
-                "\t\t\t\t\t\"name\" : \"경매 실패\"\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매가\\n <span style=\"color:#FF0000\">응찰자 0명으로 낙찰실패<span> 하였습니다.\\n<span style=\"color:#FF0000\">재판매 2회 가능<span>합니다.\"\n" +
-                "\t\t\t\t\"time\" : \"2022-08-03 22:03:16\",\n" +
-                "\t\t\t\t\"url\" : \"/front/alert/detail/url/알려주세요/222\"\n" +
+                "\t\t\t\t\"alertTitle\" : \"경매 실패\",\n" +
+                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매가\\n <span style=\"color:#FF0000\">응찰자 0명으로 낙찰실패<span> 하였습니다.\\n<span style=\"color:#FF0000\">재판매 2회 가능<span>합니다.\",\n" +
+                "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
+                "\t\t\t\t\"url\" : \"/프론트url/product/152\",\n" +
+                "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
                 "\t\t\t\t\"alertId\" : 333,\n" +
-                "\t\t\t\t\"productId\" : 113,\n" +
-                "\t\t\t\t\"alertTitle\" : {\n" +
-                "\t\t\t\t\t\"code\" : \"A06\"\n" +
-                "\t\t\t\t\t\"name\" : \"판매 등록 완료\"\n" +
-                "\t\t\t\t}\n" +
-                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매가\\n <span style=\"color:#FF6495ED\">최소 구매가 38,000원으로 판매 등록 완료<span> 되었습니다.\"\n" +
-                "\t\t\t\t\"time\" : \"2022-08-03 22:03:16\",\n" +
-                "\t\t\t\t\"url\" : \"/front/alert/detail/url/알려주세요/333\"\n" +
+                "\t\t\t\t\"alertTitle\" : \"판매 등록 완료\",\n" +
+                "\t\t\t\t\"alertContents\" : \"이케아에서 산 홀더 경매가\\n <span style=\"color:#FF6495ED\">최소 구매가 38,000원으로 판매 등록 완료<span> 되었습니다.\",\n" +
+                "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
+                "\t\t\t\t\"url\" : \"/프론트url/product/182\",\n" +
+                "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t}\n" +
                 "\t\t],\n" +
                 "\t\t\"pageable\": {\n" +
