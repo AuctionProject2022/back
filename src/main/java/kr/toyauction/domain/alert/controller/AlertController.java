@@ -97,7 +97,7 @@ public class AlertController {
     @GetMapping(AlertPath.ALERTS+"/{alertId}")
     public String getAlert(@PathVariable final Long alertId){
         return "{\n" +
-                "\t\"success\" : \"true\"\n" +
+                "\t\"success\" : true\n" +
                 "}";
     }
 }
