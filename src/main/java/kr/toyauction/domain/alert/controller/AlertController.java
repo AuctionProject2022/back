@@ -69,25 +69,25 @@ public class AlertController {
                 "\t\t],\n" +
                 "\t\t\"pageable\": {\n" +
                 "\t\t\t\"sort\": {\n" +
-                "\t\t\t\t\"sorted\": false,\t// 정렬상태\n" +
+                "\t\t\t\t\"sorted\": false,\n" +
                 "\t\t\t\t\"unsorted\": true,\n" +
                 "\t\t\t\t\"empty\": true\n" +
                 "\t\t\t},\n" +
-                "\t\t\t\"pageSize\": 6,\t\t\t// 한 페이지에서 나타내는 게시글 수\n" +
-                "\t\t\t\"pageNumber\": 2,\t\t// 현제 페이지\n" +
-                "\t\t\t\"offset\": 11,\t\t\t// 첫번째 게시글 번호\n" +
+                "\t\t\t\"pageSize\": 6,\n" +
+                "\t\t\t\"pageNumber\": 2,\n" +
+                "\t\t\t\"offset\": 11,\n" +
                 "\t\t\t\"paged\": true,\n" +
                 "\t\t\t\"unpaged\": false\n" +
                 "\t\t},\n" +
-                "\t\t\"number\": 2,\t\t\t\t// 현재 페이지\n" +
+                "\t\t\"number\": 2,\n" +
                 "\t\t\"sort\": {\n" +
                 "\t\t\t\"sorted\": false,\n" +
                 "\t\t\t\"unsorted\": true,\n" +
                 "\t\t\t\"empty\": true\n" +
                 "\t\t},\n" +
-                "\t\t\"first\": false,\t\t\t\t// 첫 번째 페이지인지 여부\n" +
-                "\t\t\"last\": false,\t\t\t\t// 마지막 페이지인지 여부\n" +
-                "\t\t\"numberOfElements\": 5,\t\t// 현재 페이지에 조회한 데이터 개수\n" +
+                "\t\t\"first\": false,\n" +
+                "\t\t\"last\": false,\n" +
+                "\t\t\"numberOfElements\": 5,\n" +
                 "\t\t\"size\": 15,\n" +
                 "\t\t\"empty\": false\n" +
                 "\t}\n" +
