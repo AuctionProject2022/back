@@ -3,9 +3,9 @@ package kr.toyauction.domain.product.controller;
 import kr.toyauction.domain.product.property.ProductPath;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -17,99 +17,83 @@ public class ProductController {
     public String getProduct(@PathVariable final Long productId) {
 
         String result = "{\n" +
-                        "  \"success\": \"true\",\n" +
-                        "  \"data\": {\n" +
-                        "    \"memberId\": 1,\n" +
-                        "    \"productId\": 1,\n" +
-                        "    \"images\": [\n" +
-                        "      {\n" +
-                        "        \"imageId\": 1,\n" +
-                        "        \"imageUrl\": \"https://example.com/IMG00001.png\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"imageId\": 2,\n" +
-                        "        \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
-                        "      }\n" +
-                        "    ],\n" +
-                        "    \"thumbnailImage\": {\n" +
-                        "      \"imageId\": 2,\n" +
-                        "      \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
-                        "    },\n" +
-                        "    \"productName\": \"Nike Air Zoom Iorem lorem lorem Pegasus 36 Miami\",\n" +
-                        "    \"minBidPrice\": 10000,\n" +
-                        "    \"rightPrice\": 38000,\n" +
-                        "    \"startSaleDateTime\": \"2022-06-19 21:48:55\",\n" +
-                        "    \"endSaleDateTime\": \"2022-06-19 21:48:55\",\n" +
-                        "    \"unitPrice\": 1000,\n" +
-                        "    \"purchaseTime\": \"6개월 이내\",\n" +
-                        "    \"deliveryOption\": \"직거래\",\n" +
-                        "    \"isExchange\": \"false\",\n" +
-                        "    \"productCondition\": \"new\",\n" +
-                        "    \"detail\": \"The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience.\",\n" +
-                        "    \"bids\": [\n" +
-                        "      {\n" +
-                        "        \"bidId\": \"1\",\n" +
-                        "        \"bidPrice\": 30000,\n" +
-                        "        \"bidDateTime\": \"2022-06-19 21:48:55\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"bidId\": \"2\",\n" +
-                        "        \"bidPrice\": 10000,\n" +
-                        "        \"bidDateTime\": \"2022-06-19 21:48:55\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"bidId\": \"3\",\n" +
-                        "        \"bidPrice\": 40000,\n" +
-                        "        \"bidDateTime\": \"2022-06-19 21:48:55\"\n" +
-                        "      }\n" +
-                        "    ],\n" +
-                        "    \"createDatetime\": \"2022-06-19 21:48:55\",\n" +
-                        "    \"updateDatetime\": \"2022-06-19 21:48:55\",\n" +
-                        "    \"enabled\": \"true\"\n" +
-                        "  }\n" +
-                        "}";
+                "  \"success\": \"true\",\n" +
+                "  \"data\": {\n" +
+                "    \"productId\": 1,\n" +
+                "    \"images\": [\n" +
+                "      {\n" +
+                "        \"imageId\": 1,\n" +
+                "        \"imageUrl\": \"https://example.com/IMG00001.png\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"imageId\": 2,\n" +
+                "        \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"thumbnailImage\": {\n" +
+                "      \"imageId\": 2,\n" +
+                "      \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
+                "    },\n" +
+                "    \"productName\": \"Nike Air Zoom Iorem lorem lorem Pegasus 36 Miami\",\n" +
+                "    \"maxBidPrice\": 40000,\n" +
+                "    \"minBidPrice\": 10000,\n" +
+                "    \"rightPrice\": 38000,\n" +
+                "    \"startSaleDateTime\": \"2022-06-19 21:48:55\",\n" +
+                "    \"endSaleDateTime\": \"2022-06-19 21:48:55\",\n" +
+                "    \"unitPrice\": 1000,\n" +
+                "    \"purchaseTime\": {\n" +
+                "      \"code\": \"PT_01\",\n" +
+                "      \"name\": \"6개월 이내\"\n" +
+                "    },\n" +
+                "    \"deliveryOption\": {\n" +
+                "      \"code\": \"DO_01\",\n" +
+                "      \"name\": \"직거래\"\n" +
+                "    },\n" +
+                "    \"isExchange\": {\n" +
+                "      \"code\": \"EC_01\",\n" +
+                "      \"name\": \"교환 불가\"\n" +
+                "    },\n" +
+                "    \"productCondition\": \"new\",\n" +
+                "    \"detail\": \"The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience.\",\n" +
+                "    \"bidCount\": 3,\n" +
+                "    \"bids\": [\n" +
+                "      {\n" +
+                "        \"bidId\": 1,\n" +
+                "        \"bidSeq\": 1,\n" +
+                "        \"bidPrice\": 30000,\n" +
+                "        \"bidDateTime\": \"2022-06-19 21:48:55\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"bidId\": 2,\n" +
+                "        \"bidSeq\": 2,\n" +
+                "        \"bidPrice\": 10000,\n" +
+                "        \"bidDateTime\": \"2022-06-19 21:48:55\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"bidId\": 3,\n" +
+                "        \"bidSeq\": 3,\n" +
+                "        \"bidPrice\": 40000,\n" +
+                "        \"bidDateTime\": \"2022-06-19 21:48:55\"\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"registerMemberId\": 1,\n" +
+                "    \"productSttus\": {\n" +
+                "      \"code\": \"ST_01\",\n" +
+                "      \"name\": \"판매중\"\n" +
+                "    },\n" +
+                "    \"createDatetime\": \"2022-06-19 21:48:55\",\n" +
+                "    \"updateDatetime\": \"2022-06-19 21:48:55\"\n" +
+                "  }\n" +
+                "}";
 
         return result;
     }
 
-    @PostMapping(ProductPath.PRODUCTS)
-    public String postProduct() {
-
+    @DeleteMapping(ProductPath.PRODUCTS + "/{productId}")
+    public String deleteProduct(@PathVariable final Long productId) {
         String result = "{\n" +
-                        "  \"success\": \"true\",\n" +
-                        "  \"data\": {\n" +
-                        "    \"memberId\": 1,\n" +
-                        "    \"productId\": 1,\n" +
-                        "    \"images\": [\n" +
-                        "      {\n" +
-                        "        \"imageId\": 1,\n" +
-                        "        \"imageUrl\": \"https://example.com/IMG00001.png\"\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"imageId\": 2,\n" +
-                        "        \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
-                        "      }\n" +
-                        "    ],\n" +
-                        "    \"thumbnailImage\": {\n" +
-                        "      \"imageId\": 2,\n" +
-                        "      \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
-                        "    },\n" +
-                        "    \"productName\": \"Nike Air Zoom Iorem lorem lorem Pegasus 36 Miami,\",\n" +
-                        "    \"minBidPrice\": 10000,\n" +
-                        "    \"rightPrice\": 38000,\n" +
-                        "    \"startSaleDateTime\": \"2022-06-19 21:48:55,\",\n" +
-                        "    \"endSaleDateTime\": \"2022-06-19 21:48:55,\",\n" +
-                        "    \"unitPrice\": 1000,\n" +
-                        "    \"purchaseTime\": \"6개월 이내,\",\n" +
-                        "    \"deliveryOption\": \"직거래,\",\n" +
-                        "    \"isExchange\": \"false,\",\n" +
-                        "    \"productCondition\": \"new,\",\n" +
-                        "    \"detail\": \"The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience. The nike Air max 270 React ENG combines a full-lengh React foam midsole with a 270 Max air unit for unrivaled comfor and striking visul experience.\",\n" +
-                        "    \"createDatetime\": \"2022-06-19 21:48:55\",\n" +
-                        "    \"updateDatetime\": \"2022-06-19 21:48:55\",\n" +
-                        "    \"enabled\": \"true\"\n" +
-                        "  }\n" +
-                        "}";
+                "  \"success\": \"true\"\n" +
+                "}";
 
         return result;
     }

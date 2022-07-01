@@ -6,8 +6,8 @@ logging:
     kr.toyauction: debug # project logging
     org:
       springframework:
-        transaction: info # spring transaction logging
-        web: info # spring web logging
+        transaction: debug # spring transaction logging
+        web: debug # spring web logging
         security: debug # spring security logging
         orm:
           jpa: debug # spring orm jpa logging
@@ -16,10 +16,10 @@ logging:
         type.descriptor.sql: trace # DDL 시 입력된 실제 Value 값을 확인할려면 trace 으로 사용
 spring:
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://211.232.166.228:3306/toy?characterEncoding=UTF-8&serverTimezone=UTC
-    username: deker
-    password: deker123!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/toy?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
   jpa:
     open-in-view: false # 지연 로딩을 Controller 까지 확장 하는것 을 금지 한다. 자세한 내용은 OSIV 패턴 참고
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # mysql DB engine
