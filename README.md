@@ -5,7 +5,17 @@ toy auction backend application 입니다.
 ## 빌드 방법
 <code>src/main/resources/application.yml.sample</code> 을 복사하여 <code>.sample</code>을 지우고 붙여넣기 합니다.
 
-안에 포함된 DB Connection 정보 및 로깅 옵션들은 적절하게 수정하여 사용하시길 바랍니다.
+application.yml
+``` 
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/toy?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
+```
+
+`url` , `username` , `password` 정보를 자신의 PC에 설치된 mysql 정보와 일치하는지 확인하고 변경 합니다.
 
 ## 사용한 기술 스텍 & 라이브러리
 
