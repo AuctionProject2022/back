@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public enum FileErrorCode implements ErrorCode {
 
-	F0000(HttpStatus.INTERNAL_SERVER_ERROR);
+	F0000(HttpStatus.INTERNAL_SERVER_ERROR),
+	F0001(HttpStatus.BAD_REQUEST);
 
 	private final HttpStatus status;
 

@@ -5,12 +5,15 @@ import kr.toyauction.domain.file.dto.ImagePostResponse;
 import kr.toyauction.domain.file.entity.Image;
 import kr.toyauction.domain.file.property.FilePath;
 import kr.toyauction.domain.file.service.ImageService;
+import kr.toyauction.domain.file.validation.ImageValidator;
 import kr.toyauction.global.dto.SuccessResponse;
 import kr.toyauction.global.dto.SuccessResponseHelper;
 import kr.toyauction.intra.property.IntraProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImageController {
 
 	private final ImageService imageService;
+	private final ImageValidator imageValidator;
 	private final IntraProperty intraProperty;
+
+	@InitBinder
+	protected void initBinders(WebDataBinder binder) {
+		binder.addValidators(imageValidator);
+	}
 
 	@PostMapping(FilePath.IMAGES)
 	public SuccessResponse<ImagePostResponse> postImage(@Validated final ImagePostRequest imagePostRequest) {
