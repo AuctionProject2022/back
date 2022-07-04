@@ -1,6 +1,6 @@
-package kr.toyauction.intra.aws.configuration;
+package kr.toyauction.infra.aws.configuration;
 
-import kr.toyauction.intra.property.IntraProperty;
+import kr.toyauction.infra.property.IntraProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
-package kr.toyauction.intra.aws.client;
+package kr.toyauction.infra.aws.client;
 
 import kr.toyauction.global.error.GlobalErrorCode;
 import kr.toyauction.global.exception.BusinessException;
-import kr.toyauction.intra.property.IntraProperty;
+import kr.toyauction.infra.property.IntraProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;

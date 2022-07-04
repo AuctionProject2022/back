@@ -1,4 +1,4 @@
-package kr.toyauction.intra.property;
+package kr.toyauction.infra.property;
 
 import lombok.Getter;
 import lombok.Setter;

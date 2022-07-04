@@ -8,7 +8,7 @@ import kr.toyauction.domain.file.service.FileService;
 import kr.toyauction.domain.file.validation.FileValidator;
 import kr.toyauction.global.dto.SuccessResponse;
 import kr.toyauction.global.dto.SuccessResponseHelper;
-import kr.toyauction.intra.property.IntraProperty;
+import kr.toyauction.infra.property.IntraProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;

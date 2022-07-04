@@ -3,10 +3,8 @@ package kr.toyauction.domain.file.service;
 import kr.toyauction.domain.file.dto.FilePostRequest;
 import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.file.entity.FileType;
-import kr.toyauction.domain.file.repository.FileRepository;
 import kr.toyauction.global.property.TestFile;
-import kr.toyauction.global.util.CommonUtils;
-import kr.toyauction.intra.aws.client.IntraAwsS3Client;
+import kr.toyauction.infra.aws.client.IntraAwsS3Client;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +15,10 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 class FileServiceTest {

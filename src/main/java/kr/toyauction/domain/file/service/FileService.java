@@ -4,7 +4,7 @@ import kr.toyauction.domain.file.dto.FilePostRequest;
 import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.file.repository.FileRepository;
 import kr.toyauction.global.util.CommonUtils;
-import kr.toyauction.intra.aws.client.IntraAwsS3Client;
+import kr.toyauction.infra.aws.client.IntraAwsS3Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
