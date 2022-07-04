@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class FilePostRequest {
 
 	@NotNull
-	private FileType domain;
+	private FileType type;
 
 	@NotNull
 	private MultipartFile file;

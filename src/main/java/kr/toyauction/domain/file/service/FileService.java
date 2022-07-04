@@ -28,7 +28,7 @@ public class FileService {
 		String prefixKey = CommonUtils.generateS3PrefixKey();
 		String fileName = CommonUtils.generateRandomFilename(Objects.requireNonNull(filePostRequest.getFile().getOriginalFilename()));
 		File file = File.builder()
-				.domain(filePostRequest.getDomain())
+				.domain(filePostRequest.getType())
 				.memberId(0L) // TODO
 				.path(prefixKey + fileName)
 				.build();
