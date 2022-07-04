@@ -1,13 +1,12 @@
 package kr.toyauction.domain.file.service;
 
 import kr.toyauction.domain.file.dto.FilePostRequest;
-import kr.toyauction.domain.file.entity.File;
-import kr.toyauction.domain.file.event.FileUploadEvent;
+import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.file.repository.FileRepository;
 import kr.toyauction.global.util.CommonUtils;
+import kr.toyauction.intra.aws.client.IntraAwsS3Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,20 +19,20 @@ import java.util.Objects;
 public class FileService {
 
 	private final FileRepository fileRepository;
-	private final ApplicationEventPublisher applicationEventPublisher;
+	private final IntraAwsS3Client intraAwsS3Client;
 
 	@Transactional
-	public File save(@NotNull final FilePostRequest filePostRequest) {
+	public FileEntity save(@NotNull final FilePostRequest filePostRequest) {
 
 		String prefixKey = CommonUtils.generateS3PrefixKey();
 		String fileName = CommonUtils.generateRandomFilename(Objects.requireNonNull(filePostRequest.getFile().getOriginalFilename()));
-		File file = File.builder()
-				.domain(filePostRequest.getType())
+		FileEntity fileEntity = FileEntity.builder()
+				.type(filePostRequest.getType())
 				.memberId(0L) // TODO
 				.path(prefixKey + fileName)
 				.build();
-		file.validation();
-		applicationEventPublisher.publishEvent(new FileUploadEvent(prefixKey + fileName, filePostRequest.getFile()));
-		return fileRepository.save(file);
+		fileEntity.validation();
+		intraAwsS3Client.upload(filePostRequest.getFile(), prefixKey + fileName);
+		return fileRepository.save(fileEntity);
 	}
 }

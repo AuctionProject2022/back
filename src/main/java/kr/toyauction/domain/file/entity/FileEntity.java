@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class File extends BaseEntity implements EntitySupport {
+public class FileEntity extends BaseEntity implements EntitySupport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +24,9 @@ public class File extends BaseEntity implements EntitySupport {
 	private Long memberId;
 
 	@Enumerated(EnumType.STRING)
-	private FileType domain;
+	private FileType type;
 
-	private Long domainId;
+	private Long targetId;
 
 	private String path;
 
@@ -38,7 +38,7 @@ public class File extends BaseEntity implements EntitySupport {
 			throw new DomainValidationException();
 		}
 
-		if (domain == null) {
+		if (type == null) {
 			log.error("domain is null");
 			throw new DomainValidationException();
 		}

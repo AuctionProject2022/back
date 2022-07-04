@@ -2,7 +2,7 @@ package kr.toyauction.domain.file.controller;
 
 import kr.toyauction.domain.file.dto.FilePostRequest;
 import kr.toyauction.domain.file.dto.FilePostResponse;
-import kr.toyauction.domain.file.entity.File;
+import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.file.property.FilePath;
 import kr.toyauction.domain.file.service.FileService;
 import kr.toyauction.domain.file.validation.FileValidator;
@@ -33,7 +33,7 @@ public class FileController {
 
 	@PostMapping(FilePath.IMAGES)
 	public SuccessResponse<FilePostResponse> postImage(@Validated final FilePostRequest filePostRequest) {
-		File file = fileService.save(filePostRequest);
-		return SuccessResponseHelper.success(new FilePostResponse(file, intraProperty.getAwsS3Host()));
+		FileEntity fileEntity = fileService.save(filePostRequest);
+		return SuccessResponseHelper.success(new FilePostResponse(fileEntity, intraProperty.getAwsS3Host()));
 	}
 }
