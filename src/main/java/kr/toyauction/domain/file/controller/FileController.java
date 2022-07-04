@@ -1,11 +1,11 @@
 package kr.toyauction.domain.file.controller;
 
-import kr.toyauction.domain.file.dto.ImagePostRequest;
-import kr.toyauction.domain.file.dto.ImagePostResponse;
-import kr.toyauction.domain.file.entity.Image;
+import kr.toyauction.domain.file.dto.FilePostRequest;
+import kr.toyauction.domain.file.dto.FilePostResponse;
+import kr.toyauction.domain.file.entity.File;
 import kr.toyauction.domain.file.property.FilePath;
-import kr.toyauction.domain.file.service.ImageService;
-import kr.toyauction.domain.file.validation.ImageValidator;
+import kr.toyauction.domain.file.service.FileService;
+import kr.toyauction.domain.file.validation.FileValidator;
 import kr.toyauction.global.dto.SuccessResponse;
 import kr.toyauction.global.dto.SuccessResponseHelper;
 import kr.toyauction.intra.property.IntraProperty;
@@ -20,20 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class ImageController {
+public class FileController {
 
-	private final ImageService imageService;
-	private final ImageValidator imageValidator;
+	private final FileService fileService;
+	private final FileValidator fileValidator;
 	private final IntraProperty intraProperty;
 
 	@InitBinder
 	protected void initBinders(WebDataBinder binder) {
-		binder.addValidators(imageValidator);
+		binder.addValidators(fileValidator);
 	}
 
 	@PostMapping(FilePath.IMAGES)
-	public SuccessResponse<ImagePostResponse> postImage(@Validated final ImagePostRequest imagePostRequest) {
-		Image image = imageService.save(imagePostRequest);
-		return SuccessResponseHelper.success(new ImagePostResponse(image, intraProperty.getAwsS3Host()));
+	public SuccessResponse<FilePostResponse> postImage(@Validated final FilePostRequest filePostRequest) {
+		File file = fileService.save(filePostRequest);
+		return SuccessResponseHelper.success(new FilePostResponse(file, intraProperty.getAwsS3Host()));
 	}
 }

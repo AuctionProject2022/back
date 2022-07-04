@@ -1,6 +1,6 @@
 package kr.toyauction.domain.file.handler;
 
-import kr.toyauction.domain.file.event.ImageUploadEvent;
+import kr.toyauction.domain.file.event.FileUploadEvent;
 import kr.toyauction.domain.file.exception.FileUploadFailedException;
 import kr.toyauction.intra.aws.client.IntraAwsS3Client;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +15,13 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ImageEventHandler {
+public class FileEventHandler {
 
 	private final IntraAwsS3Client intraAwsS3Client;
 
 	@Async
 	@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-	public void publishEventListener(@Validated final ImageUploadEvent event) {
+	public void publishEventListener(@Validated final FileUploadEvent event) {
 		try {
 			intraAwsS3Client.upload(event.getFile(), event.getKey());
 		} catch (S3Exception e) {

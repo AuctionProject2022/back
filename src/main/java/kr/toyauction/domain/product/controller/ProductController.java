@@ -22,17 +22,20 @@ public class ProductController {
                         "    \"productId\": 1,\n" +
                         "    \"images\": [\n" +
                         "      {\n" +
-                        "        \"imageId\": 1,\n" +
-                        "        \"imageUrl\": \"https://example.com/IMG00001.png\"\n" +
+                        "        \"fileId\": 1,\n" +
+                        "        \"fileType\": PRODUCT_IMAGE,\n" +
+                        "        \"url\": \"https://example.com/IMG00001.png\"\n" +
                         "      },\n" +
                         "      {\n" +
-                        "        \"imageId\": 2,\n" +
-                        "        \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
+                        "        \"fileId\": 2,\n" +
+                        "        \"fileType\": PRODUCT_IMAGE,\n" +
+                        "        \"url\": \"https://example.com/IMG00002.png\"\n" +
                         "      }\n" +
                         "    ],\n" +
                         "    \"thumbnailImage\": {\n" +
-                        "      \"imageId\": 2,\n" +
-                        "      \"imageUrl\": \"https://example.com/IMG00002.png\"\n" +
+                        "      \"fileId\": 2,\n" +
+                        "      \"fileType\": PRODUCT_IMAGE,\n" +
+                        "      \"url\": \"https://example.com/IMG00002.png\"\n" +
                         "    },\n" +
                         "    \"productName\": \"Nike Air Zoom Iorem lorem lorem Pegasus 36 Miami\",\n" +
                         "    \"maxBidPrice\": 40000,\n" +

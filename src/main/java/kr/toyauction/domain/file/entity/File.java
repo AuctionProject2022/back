@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Image extends BaseEntity implements EntitySupport {
+public class File extends BaseEntity implements EntitySupport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Image extends BaseEntity implements EntitySupport {
 	private Long memberId;
 
 	@Enumerated(EnumType.STRING)
-	private ImageDomain domain;
+	private FileType domain;
 
 	private Long domainId;
 

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ImageUploadEvent {
+public class FileUploadEvent {
 
 	@NotNull
 	private String key;

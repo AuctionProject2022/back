@@ -1,6 +1,6 @@
 package kr.toyauction.domain.file.dto;
 
-import kr.toyauction.domain.file.entity.ImageDomain;
+import kr.toyauction.domain.file.entity.FileType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Builder
-public class ImagePostRequest {
+public class FilePostRequest {
 
 	@NotNull
-	private ImageDomain domain;
+	private FileType domain;
 
 	@NotNull
 	private MultipartFile file;
