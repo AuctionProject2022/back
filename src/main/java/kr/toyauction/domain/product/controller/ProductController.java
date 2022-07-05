@@ -109,4 +109,18 @@ public class ProductController {
 
         return result;
     }
+
+    @PostMapping(ProductPath.PRODUCTS + "/bids")
+    public String postBid() {
+        String result = "{\n" +
+                "  \"success\": \"true\",\n" +
+                "  \"data\": {\n" +
+                "    \"bidId\": 1,\n" +
+                "    \"createDatetime\": \"2022-06-19 21:48:55\",\n" +
+                "    \"updateDatetime\": \"2022-06-19 21:48:55\"\n" +
+                "  }\n" +
+                "}";
+
+        return result;
+    }
 }
