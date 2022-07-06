@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(name = "file")
 public class FileEntity extends BaseEntity implements EntitySupport {
 
 	@Id
