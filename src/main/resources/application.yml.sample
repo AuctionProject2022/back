@@ -36,11 +36,18 @@ spring:
         default-page-size: 20 # page default size
   servlet:
     multipart:
-      enabled: true # file upload true
-      max-file-size: 1024MB # single file max size
-      max-request-size: 1024MB # total file request max size
+      enabled: true # fileEntity upload true
+      max-file-size: 1024MB # single fileEntity max size
+      max-request-size: 1024MB # total fileEntity request max size
   messages:
     basename: classpath:/i18n/messages, classpath:/i18n/errors # messages 경로
   web:
     resources:
-      add-mappings: false # url 으로 resources 접근 여부
+      add-mappings: true # url 으로 resources 접근 여부
+
+property:
+  intra:
+    aws-s3-host: https://cdn.toyauction.kr/
+    aws-s3-bucket: toy-auction
+    aws-s3-access-key-id: access_key_id
+    aws-s3-secret-access-key: secret_access_key
