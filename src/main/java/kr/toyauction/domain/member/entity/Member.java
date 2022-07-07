@@ -38,7 +38,7 @@ public class Member extends BaseEntity implements EntitySupport {
     @Override
     public void validation() {
         if (username == null || !username.matches(Regex.USERNAME)) {
-            log.error("nickname : {}", username);
+            log.error("username : {}", username);
             throw new DomainValidationException();
         }
     }

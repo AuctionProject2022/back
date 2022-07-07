@@ -10,12 +10,12 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 
 @RequiredArgsConstructor
-@Service
+@Component
 public class OAuth2MemberService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     @Override

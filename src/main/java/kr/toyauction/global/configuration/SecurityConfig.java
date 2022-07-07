@@ -1,10 +1,13 @@
 package kr.toyauction.global.configuration;
 
+import kr.toyauction.domain.member.handler.OAuth2SuccessHandler;
 import kr.toyauction.domain.member.service.OAuth2MemberService;
 import kr.toyauction.global.authentication.JwtAccessDeniedHandler;
 import kr.toyauction.global.authentication.JwtAuthenticationEntryPoint;
 import kr.toyauction.global.authentication.JwtFilter;
+import kr.toyauction.global.authentication.JwtProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -25,10 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 //    private final JwtFilter jwtFilter;
 
+    private final OAuth2SuccessHandler successHandler;
+    private final JwtProvider jwtProvider;
+
     @Override
     public void configure(WebSecurity web) {
-        web
-                .ignoring().antMatchers("/**");
+//        web
+//                .ignoring().antMatchers("/**");
     }
 
     @Override
@@ -48,10 +54,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll() // 모든 url 허용
+                .antMatchers("/**").permitAll()// 모든 url 허용
+                .anyRequest().authenticated()
 
                 .and()
+//                .addFilterBefore(new JwtFilter(jwtProvider),
+//                        UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
+                .successHandler(successHandler)
                 .userInfoEndpoint()
                 .userService(oAuth2MemberService);
 
