@@ -30,8 +30,8 @@ public class OAuth2MemberService implements OAuth2UserService<OAuth2UserRequest,
         GoogleRequest attributes = GoogleRequest.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(Role.GUEST.getKey()))
-                ,	attributes.getAttributes()
-                ,	attributes.getNameAttributeKey());
+        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(Role.USER.getKey()))
+                ,	attributes.convertToMap()
+                ,	"email");
     }
 }

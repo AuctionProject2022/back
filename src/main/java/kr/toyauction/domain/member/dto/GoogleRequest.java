@@ -5,15 +5,16 @@ import kr.toyauction.domain.member.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
 public class GoogleRequest {
-    private Map<String, Object> attributes;
-    private String nameAttributeKey;
-    private String name;
-    private String email;
-    private String picture;
+    private final Map<String, Object> attributes;
+    private final String nameAttributeKey;
+    private final String name;
+    private final String email;
+    private final String picture;
 
     @Builder
     public GoogleRequest(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture){
@@ -38,12 +39,14 @@ public class GoogleRequest {
                 .build();
     }
 
-    public Member toEntity() {
-        return Member.builder()
-                .userId(email)
-                .username(name)
-                .picture(picture)
-                .role(Role.GUEST)
-                .build();
+    public Map<String, Object> convertToMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", nameAttributeKey);
+        map.put("key", nameAttributeKey);
+        map.put("name", name);
+        map.put("email", email);
+        map.put("picture", picture);
+
+        return map;
     }
 }

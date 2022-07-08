@@ -1,5 +1,6 @@
 package kr.toyauction.global.authentication;
 
+import kr.toyauction.domain.member.dto.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,6 +29,8 @@ public class JwtProvider implements InitializingBean {
 
 	@Value("${jwt.access_token_expiration}")
 	private long accessTokenExpiration;
+	@Value("${jwt.refresh_token_expiration}")
+	private long refreshTokenExpiration;
 
 	private Key key;
 
@@ -37,23 +40,30 @@ public class JwtProvider implements InitializingBean {
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	public String createToken(Authentication authentication) {
-		String authorities = authentication.getAuthorities().stream()
-				.map(GrantedAuthority::getAuthority)
-				.collect(Collectors.joining(","));
+	public Token createToken(Long memberId) {
 
 		// expiration time
 		long now = (new Date()).getTime();
-		long ValidityinSecond = now + this.accessTokenExpiration;
-		Date validity = new Date(ValidityinSecond);
+		long accessValidityinSecond = now + accessTokenExpiration;
+		long refreshValidityinSecond = now + refreshTokenExpiration;
+		Date accessValidity = new Date(accessValidityinSecond);
+		Date refreshValidity = new Date(refreshValidityinSecond);
 
 		// build token
-		return Jwts.builder()
-				.setSubject(authentication.getName())
-				.claim("", authorities)
-				.signWith(key, SignatureAlgorithm.HS512)
-				.setExpiration(validity)
-				.compact();
+		return new Token(
+				Jwts.builder()
+						.setSubject(String.valueOf(memberId))
+//						.claim("", authorities)
+						.signWith(key, SignatureAlgorithm.HS512)
+						.setExpiration(accessValidity)
+						.compact(),
+				Jwts.builder()
+						.setSubject(String.valueOf(memberId))
+//						.claim("", authorities)
+						.signWith(key, SignatureAlgorithm.HS512)
+						.setExpiration(refreshValidity)
+						.compact()
+		);
 	}
 
 	public Authentication getAuthentication(String token) {
