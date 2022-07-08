@@ -4,7 +4,6 @@ import kr.toyauction.domain.product.property.ProductPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,7 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class})
-@AutoConfigureRestDocs(uriScheme = "https", uriHost = "api.toyauction.kr")
 class ProductControllerTest {
 
 	private MockMvc mockMvc;
