@@ -63,3 +63,7 @@ bootJar {
         into 'static/docs'
     }
 }
+
+bootBuildImage {
+    dependsOn bootJar
+}
