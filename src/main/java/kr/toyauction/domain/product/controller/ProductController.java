@@ -1,14 +1,26 @@
 package kr.toyauction.domain.product.controller;
 
+import kr.toyauction.domain.member.dto.MemberPostRequest;
+import kr.toyauction.domain.member.dto.MemberPostResponse;
+import kr.toyauction.domain.member.entity.Member;
+import kr.toyauction.domain.product.dto.ProductPostRequest;
+import kr.toyauction.domain.product.dto.ProductPostResponse;
+import kr.toyauction.domain.product.entity.Product;
 import kr.toyauction.domain.product.property.ProductPath;
+import kr.toyauction.domain.product.service.ProductService;
+import kr.toyauction.global.dto.SuccessResponse;
+import kr.toyauction.global.dto.SuccessResponseHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
+
+	private final ProductService productService;
 
 	@GetMapping(ProductPath.PRODUCTS + "/{productId}")
 	public String getProduct(@PathVariable final Long productId) {
@@ -99,7 +111,7 @@ public class ProductController {
 	}
 
 	@PostMapping(ProductPath.PRODUCTS)
-	public String postProduct() {
+	public String postMember(@Validated @RequestBody final ProductPostRequest request) {
 		String result = "{\n" +
 				"  \"success\": \"true\",\n" +
 				"  \"data\": {\n" +
@@ -109,6 +121,7 @@ public class ProductController {
 				"    \"enabled\": \"true\"\n" +
 				"  }\n" +
 				"}";
+
         return result;
     }
 
@@ -122,7 +135,6 @@ public class ProductController {
                         "    \"updateDatetime\": \"2022-06-19 21:48:55\"\n" +
                         "  }\n" +
                         "}";
-
         return result;
     }
 
