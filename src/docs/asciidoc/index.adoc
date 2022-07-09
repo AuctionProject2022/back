@@ -8,12 +8,10 @@
 :operation-curl-request-title: Example request
 :operation-http-response-title: Example response
 
-[[overview]]
 = 개요
 
 본 문서는 토이옥션 API Document 입니다.
 
-[[overview-http-verbs]]
 == HTTP 동사
 
 본 REST API 에서 사용하는 HTTP 동사(verbs)는 가능한한 표준 HTTP 와 REST 규약을 따릅니다.
@@ -37,7 +35,7 @@
 | 기존 리소스를 삭제할 떄 사용
 |===
 
-[[overview-http-status-codes]]
+
 == HTTP 상태 코드
 
 본 REST API 에서 사용하는 HTTP 상태 코드는 가능한한 표준 HTTP 와 REST 규약을 따릅니다.
@@ -73,7 +71,6 @@
 | 과도한 트래픽으로 서버장애가 발생하여 실제 서비스 IP 를 찾지 못한 경우
 |===
 
-[[overview-response]]
 == 응답 본문
 
 - 응답 데이터는 JSON 으로 응답 한다.
@@ -206,23 +203,28 @@
 |업로드할 수 없는 파일 형식입니다.
 |===
 
-[[resources]]
 = 리소스 API
 
-[[resources-product]]
 == 상품
 
-[[resources-get-product]]
 === 상품 조회
 
 `productId` 로 상품을 조회할 수 있다.
 
 operation::get-product[snippets='http-request,http-response,response-fields']
 
-[[resources-file]]
 == 파일
 
-[[resources-post-file]]
+파일 타입
+
+|===
+| fileType | 내용
+
+|PRODUCT_IMAGE
+|상품 이미지
+
+|===
+
 === 파일 등록
 
 현재 업로드 가능한 확장자 : jpg, png
