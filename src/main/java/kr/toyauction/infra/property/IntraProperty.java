@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "property.intra")
 public class IntraProperty {
-	private String awsS3Host;
 	private String awsS3Bucket;
 	private String awsS3AccessKeyId;
 	private String awsS3SecretAccessKey;

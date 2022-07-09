@@ -3,7 +3,7 @@ package kr.toyauction.domain.file.service;
 import kr.toyauction.domain.file.dto.FilePostRequest;
 import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.file.entity.FileType;
-import kr.toyauction.global.property.TestFile;
+import kr.toyauction.global.property.TestProperty;
 import kr.toyauction.infra.aws.client.IntraAwsS3Client;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,8 +39,8 @@ class FileServiceTest {
 		// given
 		FileType fileType = FileType.PRODUCT_IMAGE;
 		MultipartFile testFile = new MockMultipartFile(
-				TestFile.PNG_FILENAME,
-				resourceLoader.getResource(TestFile.PNG_CLASSPATH).getInputStream());
+				TestProperty.PNG_FILENAME,
+				resourceLoader.getResource(TestProperty.PNG_CLASSPATH).getInputStream());
 
 		FilePostRequest filePostRequest = FilePostRequest.builder()
 				.type(fileType)

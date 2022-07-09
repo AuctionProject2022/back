@@ -1,6 +1,7 @@
 package kr.toyauction.domain.product.controller;
 
 import kr.toyauction.domain.product.property.ProductPath;
+import kr.toyauction.global.property.TestProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -32,7 +34,12 @@ class ProductControllerTest {
 	@BeforeEach
 	public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-				.apply(documentationConfiguration(restDocumentation))
+				.apply(
+						documentationConfiguration(restDocumentation)
+								.uris()
+								.withScheme(TestProperty.SPRING_REST_DOCS_SERVER_SCHEME)
+								.withHost(TestProperty.SPRING_REST_DOCS_SERVER_HOST)
+								.withPort(TestProperty.SPRING_REST_DOCS_SERVER_PORT))
 				.build();
 	}
 
