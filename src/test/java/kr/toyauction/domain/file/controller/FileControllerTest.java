@@ -25,6 +25,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.lang.reflect.Field;
+import java.time.LocalDateTime;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -77,11 +80,20 @@ class FileControllerTest {
 				TestProperty.PNG_FILENAME,
 				MediaType.IMAGE_PNG_VALUE,
 				resourceLoader.getResource(TestProperty.PNG_CLASSPATH).getInputStream());
-		given(fileService.save(any(FilePostRequest.class))).willReturn(FileEntity.builder()
+
+		FileEntity fileEntity = FileEntity.builder()
 				.id(1L)
 				.memberId(0L)
 				.path(CommonUtils.generateS3PrefixKey() + CommonUtils.generateRandomFilename(file.getOriginalFilename()))
-				.build());
+				.build();
+		Field createDatetime = fileEntity.getClass().getSuperclass().getDeclaredField("createDatetime");
+		createDatetime.setAccessible(true);
+		createDatetime.set(fileEntity, LocalDateTime.now());
+		Field updateDateTime = fileEntity.getClass().getSuperclass().getDeclaredField("updateDatetime");
+		updateDateTime.setAccessible(true);
+		updateDateTime.set(fileEntity, LocalDateTime.now());
+
+		given(fileService.save(any(FilePostRequest.class))).willReturn(fileEntity);
 
 		// when
 		ResultActions resultActions = mockMvc.perform(multipart(FilePath.FILE)
@@ -94,7 +106,9 @@ class FileControllerTest {
 								fieldWithPath("data.memberId").description("회원 고유번호"),
 								fieldWithPath("data.fileType").description("파일 타입"),
 								fieldWithPath("data.targetId").description("타겟 도메인 ID"),
-								fieldWithPath("data.path").description("파일 URL")
+								fieldWithPath("data.path").description("파일 URL"),
+								fieldWithPath("data.createDatetime").description("생성 날짜"),
+								fieldWithPath("data.updateDatetime").description("수정 날짜")
 						)
 				));
 
@@ -106,6 +120,8 @@ class FileControllerTest {
 		resultActions.andExpect(jsonPath("data.fileType").isEmpty());
 		resultActions.andExpect(jsonPath("data.targetId").isEmpty());
 		resultActions.andExpect(jsonPath("data.path").isNotEmpty());
+		resultActions.andExpect(jsonPath("data.createDatetime").isNotEmpty());
+		resultActions.andExpect(jsonPath("data.updateDatetime").isNotEmpty());
 	}
 
 	@Test
