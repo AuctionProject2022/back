@@ -39,11 +39,6 @@ public class FileEntity extends BaseEntity implements EntitySupport {
 			throw new DomainValidationException();
 		}
 
-		if (type == null) {
-			log.error("domain is null");
-			throw new DomainValidationException();
-		}
-
 		if (!StringUtils.hasText(path)) {
 			log.error("path : {}", path);
 			throw new DomainValidationException();

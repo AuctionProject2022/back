@@ -9,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Slf4j
@@ -22,17 +22,17 @@ public class FileService {
 	private final IntraAwsS3Client intraAwsS3Client;
 
 	@Transactional
-	public FileEntity save(@NotNull final FilePostRequest filePostRequest) {
+	public FileEntity save(final FilePostRequest request) {
 
 		String prefixKey = CommonUtils.generateS3PrefixKey();
-		String fileName = CommonUtils.generateRandomFilename(Objects.requireNonNull(filePostRequest.getFile().getOriginalFilename()));
+		String randomFilename = CommonUtils.generateRandomFilename(Objects.requireNonNull(request.getFile().getOriginalFilename()));
+
 		FileEntity fileEntity = FileEntity.builder()
-				.type(filePostRequest.getType())
 				.memberId(0L) // TODO
-				.path(prefixKey + fileName)
+				.path(prefixKey + randomFilename)
 				.build();
 		fileEntity.validation();
-		intraAwsS3Client.upload(filePostRequest.getFile(), prefixKey + fileName);
+		intraAwsS3Client.upload(request.getFile(), prefixKey + randomFilename);
 		return fileRepository.save(fileEntity);
 	}
 }

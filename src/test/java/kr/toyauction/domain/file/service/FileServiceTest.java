@@ -2,56 +2,91 @@ package kr.toyauction.domain.file.service;
 
 import kr.toyauction.domain.file.dto.FilePostRequest;
 import kr.toyauction.domain.file.entity.FileEntity;
-import kr.toyauction.domain.file.entity.FileType;
+import kr.toyauction.domain.file.repository.FileRepository;
 import kr.toyauction.global.property.TestProperty;
+import kr.toyauction.global.util.CommonUtils;
 import kr.toyauction.infra.aws.client.IntraAwsS3Client;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.context.support.GenericWebApplicationContext;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
-@SpringBootTest
+@ExtendWith({MockitoExtension.class})
 class FileServiceTest {
 
-	@MockBean
+	@Mock
+	FileRepository fileRepository;
+
+	@Mock
 	IntraAwsS3Client intraAwsS3Client;
 
-	@Autowired
 	FileService fileService;
 
-	@Autowired
 	ResourceLoader resourceLoader;
 
+	@BeforeEach
+	void setMemberService() {
+		fileService = new FileService(fileRepository, intraAwsS3Client);
+		resourceLoader = new GenericWebApplicationContext();
+	}
+
 	@Test
-	@DisplayName("파일을 생성 합니다.")
+	@DisplayName("success : 파일 생성")
 	void save() throws IOException {
 
 		// given
-		FileType fileType = FileType.PRODUCT_IMAGE;
-		MultipartFile testFile = new MockMultipartFile(
+		MockMultipartFile file = new MockMultipartFile(
+				"file",
 				TestProperty.PNG_FILENAME,
+				MediaType.IMAGE_PNG_VALUE,
 				resourceLoader.getResource(TestProperty.PNG_CLASSPATH).getInputStream());
+		FilePostRequest request = FilePostRequest.builder()
+				.file(file)
+				.build();
+		given(fileRepository.save(any(FileEntity.class))).willReturn(FileEntity.builder()
+				.id(1L)
+				.memberId(0L)
+				.path(CommonUtils.generateS3PrefixKey() + file.getOriginalFilename())
+				.build());
 
-		FilePostRequest filePostRequest = FilePostRequest.builder()
-				.type(fileType)
-				.file(testFile)
+		// when
+		FileEntity saved = fileService.save(request);
+
+		// then
+		assertNotNull(saved.getId());
+		assertNotNull(saved.getMemberId());
+		assertNull(saved.getType());
+		assertNull(saved.getTargetId());
+		assertNotNull(saved.getPath());
+	}
+
+	@Test
+	@DisplayName("fail : file 이 null 인 경우")
+	void saveFileIsNull() {
+
+		// given
+		MockMultipartFile file = null;
+		FilePostRequest request = FilePostRequest.builder()
+				.file(file)
 				.build();
 
 		// when
-		FileEntity saved = fileService.save(filePostRequest);
+		assertThrows(NullPointerException.class, () -> {
+			fileService.save(request);
+		});
 
 		// then
-		assertEquals(filePostRequest.getType(), saved.getType());
-		assertNotNull(saved.getPath());
 	}
 }

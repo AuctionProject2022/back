@@ -10,17 +10,17 @@ import lombok.Setter;
 @Setter
 public class FilePostResponse extends BaseResponse {
 
-	private Long id;
+	private Long fileId;
 	private Long memberId;
-	private FileType domain;
-	private Long domainId;
+	private FileType fileType;
+	private Long targetId;
 	private String path;
 
 	public FilePostResponse(final FileEntity fileEntity, final String imageHost) {
-		this.id = fileEntity.getId();
+		this.fileId = fileEntity.getId();
 		this.memberId = fileEntity.getMemberId();
-		this.domain = fileEntity.getType();
-		this.domainId = fileEntity.getTargetId();
+		this.fileType = fileEntity.getType();
+		this.targetId = fileEntity.getTargetId();
 		this.path = imageHost + fileEntity.getPath();
 		this.createDatetime = fileEntity.getCreateDatetime();
 		this.updateDatetime = fileEntity.getUpdateDatetime();

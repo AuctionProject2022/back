@@ -4,5 +4,5 @@ import kr.toyauction.global.property.Path;
 
 public class FilePath implements Path {
 
-	public static final String IMAGES = "/images";
+	public static final String FILE = "/files";
 }

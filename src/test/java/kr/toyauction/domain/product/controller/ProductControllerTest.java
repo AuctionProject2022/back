@@ -20,6 +20,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.responseH
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.relaxedResponseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -39,7 +40,11 @@ class ProductControllerTest {
 								.uris()
 								.withScheme(TestProperty.SPRING_REST_DOCS_SERVER_SCHEME)
 								.withHost(TestProperty.SPRING_REST_DOCS_SERVER_HOST)
-								.withPort(TestProperty.SPRING_REST_DOCS_SERVER_PORT))
+								.withPort(TestProperty.SPRING_REST_DOCS_SERVER_PORT)
+								.and()
+								.operationPreprocessors()
+								.withRequestDefaults(prettyPrint())
+								.withResponseDefaults(prettyPrint()))
 				.build();
 	}
 

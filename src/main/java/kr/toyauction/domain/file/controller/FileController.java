@@ -15,7 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -31,9 +33,9 @@ public class FileController {
 		binder.addValidators(fileValidator);
 	}
 
-	@PostMapping(FilePath.IMAGES)
-	public SuccessResponse<FilePostResponse> postImage(@Validated final FilePostRequest filePostRequest) {
-		FileEntity fileEntity = fileService.save(filePostRequest);
+	@PostMapping(value = FilePath.FILE)
+	public SuccessResponse<FilePostResponse> postFile(@Validated FilePostRequest request) {
+		FileEntity fileEntity = fileService.save(request);
 		return SuccessResponseHelper.success(new FilePostResponse(fileEntity, globalProperty.getAwsS3Host()));
 	}
 }

@@ -1,7 +1,6 @@
 package kr.toyauction.domain.file.validation;
 
 import kr.toyauction.domain.file.dto.FilePostRequest;
-import kr.toyauction.domain.file.entity.FileType;
 import kr.toyauction.domain.file.error.FileErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +23,8 @@ public class FileValidator implements Validator {
 		if (target instanceof FilePostRequest) {
 			FilePostRequest request = (FilePostRequest) target;
 			if (request.getFile() != null) {
-				if (request.getType() == FileType.PRODUCT_IMAGE) {
-					if (!enableContentTypes(request.getFile().getContentType())) {
-						errors.rejectValue("file", FileErrorCode.F0001.name(), new String[]{"jpg, gif, png"}, null);
-					}
+				if (!enableContentTypes(request.getFile().getContentType())) {
+					errors.rejectValue("file", FileErrorCode.F0001.name(), new String[]{"jpg, png"}, null);
 				}
 			}
 		}
@@ -36,7 +33,6 @@ public class FileValidator implements Validator {
 	private boolean enableContentTypes(final String contentType) {
 		String[] enableContentTypes = {
 				"image/jpeg",
-				"image/gif",
 				"image/png"
 		};
 		for (String enableContentType : enableContentTypes) {
