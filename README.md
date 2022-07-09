@@ -3,7 +3,11 @@
 toy auction backend application 입니다.
 
 ## 빌드 방법
-<code>src/main/resources/application.yml.sample</code> 을 복사하여 <code>.sample</code>을 지우고 붙여넣기 합니다.
+
+### 사전 준비
+
+1. `java11` 를 설치 합니다.
+2. `src/main/resources/application.yml.sample` 을 복사하여 `.sample` 을 지우고 붙여넣기 합니다.
 
 application.yml
 ``` 
@@ -17,12 +21,51 @@ spring:
 
 `url` , `username` , `password` 정보를 자신의 PC에 설치된 mysql 정보와 일치하는지 확인하고 변경 합니다.
 
+### CASE1 intellij IDE 로 실행하기
+
+1. 상단 메뉴에서 `File` -> `Project Structure` 를 선택합니다. 
+2. Java SDK 가 `java11` 버전인지 확인 합니다. 
+3. `ToyAuctionApplication.java` 으로 이동하여 Main Method 를 실행 합니다.
+
+### CASE2 Gradle CLI 로 실행하기
+
+`Terminal` 을 실행 하여 아래 명령어를 입력 합니다.
+```
+cd {project}
+./gradlew build
+java -jar ./build/libs/back-1.0-SNAPSHOT.jar
+```
+
+**중요사항** : Spring Rest Docs 의 경우에는 gradle CLI 으로 실행항 경우에만 사용 가능합니다.
+
+## Spring Rest Docs
+
+본 프로젝트에서 사용중인 API Document 서비스 입니다. asciidoc 기반으로 동작 합니다.
+자세한 가이드 문서는 [여기](https://docs.spring.io/spring-restdocs/docs/current/reference/html5/) 을 참고해 주세요.
+
+Spring Rest Docs 는 테스트코드 기반으로 동작되는 라이브러리 입니다. 테스트 코드가 실패하면 API 문서 빌드도 실패 합니다.
+
+adoc 파일은 아래의 경로는 다음과 같습니다. `src/docs/asciidoc/index.adoc`
+
+spring rest docs 경로는 아래와 같습니다. 
+
+- http://localhost:8080/docs/index.html ( local )
+- https://api.toyauction.kr/docs/index.html ( server )
+
+**중요사항** : Spring Rest Docs 의 경우에는 gradle CLI 으로 실행항 경우에만 사용 가능합니다.
+Intellij 로 Run 을 했을 경우에는 404 오류가 발생합니다. 이는 build 시 파일을 복사하는데 intellij Run 에서는 지원하지 않고 gradle 에서만 지원하기 때문입니다. 
+
+
+
+
+
 ## 사용한 기술 스텍 & 라이브러리
 
 - Java 11
 - spring boot : 자바 기반 프레임워크
 - spring JPA : 데이터베이스 ORM 라이브러리
 - QueryDSL : 복잡한 Database Select Query 를 편리하게 생성해주는 라이브러리
+- Spring Rest Docs : API Document
 
 ### 데이터베이스
 
