@@ -1,5 +1,6 @@
 package kr.toyauction.domain.member.entity;
 
+import kr.toyauction.domain.member.enums.AuthProvider;
 import kr.toyauction.domain.member.enums.Role;
 import kr.toyauction.global.entity.BaseEntity;
 import kr.toyauction.global.entity.EntitySupport;
@@ -31,9 +32,16 @@ public class Member extends BaseEntity implements EntitySupport {
     @Column
     private String picture;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AuthProvider platform;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @Column
+    private String refreshToken;
 
     @Override
     public void validation() {
@@ -47,4 +55,7 @@ public class Member extends BaseEntity implements EntitySupport {
         this.username = username;
     }
 
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }
