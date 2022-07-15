@@ -1,7 +1,7 @@
-package kr.toyauction.domain.product.controller;
+package kr.toyauction.domain.alert.controller;
 
+import kr.toyauction.domain.product.property.ProductPath;
 import kr.toyauction.global.property.TestProperty;
-import kr.toyauction.global.property.Url;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class})
-class ProductControllerTest {
+class AlertControllerTest {
 
 	private MockMvc mockMvc;
 
@@ -47,9 +47,10 @@ class ProductControllerTest {
 				.build();
 	}
 
+
 	@Test
-	void getProduct() throws Exception {
-		mockMvc.perform(get(Url.PRODUCT + "/5")
+	void getAlerts() throws Exception {
+		mockMvc.perform(get(ProductPath.PRODUCTS + "/5")
 						.contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -93,4 +94,5 @@ class ProductControllerTest {
 						)
 				));
 	}
+
 }

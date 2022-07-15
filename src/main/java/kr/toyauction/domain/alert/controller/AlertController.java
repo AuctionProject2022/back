@@ -1,6 +1,6 @@
 package kr.toyauction.domain.alert.controller;
 
-import kr.toyauction.domain.alert.property.AlertPath;
+import kr.toyauction.global.property.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AlertController {
 
-    @GetMapping(value=AlertPath.ALERTS, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value= Url.ALERT, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAlerts(){
         return "{\n" +
                 "\t\"success\" : \"true\",\n" +
@@ -97,7 +97,7 @@ public class AlertController {
                 "}";
     }
 
-    @GetMapping(AlertPath.ALERTS+"/{alertId}")
+    @GetMapping(Url.ALERT +"/{alertId}")
     public String getAlert(@PathVariable final Long alertId){
         return "{\n" +
                 "\t\"success\" : true\n" +
