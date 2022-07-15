@@ -23,6 +23,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtProvider implements InitializingBean {
 	private final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+	private static final String AUTHORITIES_KEY = "auth";
 
 	@Value("${jwt.secret}")
 	private String secret;
@@ -40,7 +41,7 @@ public class JwtProvider implements InitializingBean {
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	public Token createToken(Long memberId) {
+	public Token createToken(Long memberId,Authentication authentication) {
 
 		// expiration time
 		long now = (new Date()).getTime();
@@ -53,13 +54,13 @@ public class JwtProvider implements InitializingBean {
 		return new Token(
 				Jwts.builder()
 						.setSubject(String.valueOf(memberId))
-//						.claim("", authorities)
+						.claim(AUTHORITIES_KEY, authentication.getAuthorities())
 						.signWith(key, SignatureAlgorithm.HS512)
 						.setExpiration(accessValidity)
 						.compact(),
 				Jwts.builder()
 						.setSubject(String.valueOf(memberId))
-//						.claim("", authorities)
+						.claim(AUTHORITIES_KEY, authentication.getAuthorities())
 						.signWith(key, SignatureAlgorithm.HS512)
 						.setExpiration(refreshValidity)
 						.compact()
@@ -67,15 +68,14 @@ public class JwtProvider implements InitializingBean {
 	}
 
 	public Authentication getAuthentication(String token) {
-		Claims claims = Jwts
-				.parserBuilder()
-				.setSigningKey(key)
-				.build()
-				.parseClaimsJws(token)
-				.getBody();
+		Claims claims = parseClaims(token);
+
+		if (claims.get(AUTHORITIES_KEY) == null) {
+			throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+		}
 
 		Collection<? extends GrantedAuthority> authorities =
-				Arrays.stream(claims.get("").toString().split(","))
+				Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
 						.map(SimpleGrantedAuthority::new)
 						.collect(Collectors.toList());
 
@@ -98,5 +98,13 @@ public class JwtProvider implements InitializingBean {
 			logger.info("JWT 토큰이 잘못되었습니다.");
 		}
 		return false;
+	}
+
+	private Claims parseClaims(String token) {
+		try {
+			return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+		} catch (ExpiredJwtException e) {
+			return e.getClaims();
+		}
 	}
 }

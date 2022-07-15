@@ -10,9 +10,7 @@ import kr.toyauction.domain.member.enums.Role;
 import kr.toyauction.domain.member.repository.MemberRepository;
 import kr.toyauction.global.authentication.JwtProvider;
 import kr.toyauction.global.dto.SuccessResponse;
-import kr.toyauction.global.dto.SuccessResponseHelper;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.mapper.Mapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
@@ -24,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -39,12 +36,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Transactional
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-        Optional<Member> member = memberRepository.findByUserId((String) oAuth2User.getAttributes().get("email")); // 메일로 db 검색
-        if (member.isEmpty()) {
+        Member member = memberRepository.findByUserId((String) oAuth2User.getAttributes().get("email")); // 메일로 db 검색
+        if (member == null) {
             String username = RandomStringUtils.randomAlphanumeric(10); // 랜덤 닉네임 생성
             member= memberRepository.findByUsername(username); // 닉네임으로 db 검색
 
-            while (member.isPresent()) { // 닉네임으로 검색된 값이 있으면 랜덤 닉네임 다시 생성해서 검색 없을때 까지
+            while (member != null) { // 닉네임으로 검색된 값이 있으면 랜덤 닉네임 다시 생성해서 검색 없을때 까지
                 username = RandomStringUtils.randomAlphanumeric(10);
                 member = memberRepository.findByUsername(username);
             }
@@ -60,9 +57,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             member = memberRepository.findByUserId((String) oAuth2User.getAttributes().get("email"));
         }
 
-        Token token = jwtProvider.createToken(member.get().getId()); // 토큰 발행
-        member.get().setRefreshToken(token.getRefreshToken());      // 리프레쉬 토큰값 db에 업데이트
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", token.getRefreshToken())
+        Token token = jwtProvider.createToken(member.getId(),authentication); // 토큰 발행
+        member.setRefreshToken(token.getRefreshToken());      // 리프레쉬 토큰값 db에 업데이트
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", token.getRefreshToken()) // 헤더에 전달할 쿠키 설정
                 .maxAge(7 * 24 * 60 * 60)
                 .path("/")
                 .secure(true)
@@ -71,7 +68,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 .build();
         response.setHeader("Set-Cookie",cookie.toString());
         response.setContentType("application/json;charset=UTF-8");
-        GoogleResponse googleResponse = new GoogleResponse(token.getAccessToken(),true);
+        GoogleResponse googleResponse = new GoogleResponse(token.getAccessToken(),true); // 바디 응답 data
         SuccessResponse<GoogleResponse> successResponse = new SuccessResponse<>(googleResponse);
         String result = mapper.writeValueAsString(successResponse);
         response.getWriter().write(result);

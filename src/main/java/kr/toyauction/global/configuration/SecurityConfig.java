@@ -7,15 +7,14 @@ import kr.toyauction.global.authentication.JwtAuthenticationEntryPoint;
 import kr.toyauction.global.authentication.JwtFilter;
 import kr.toyauction.global.authentication.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final OAuth2MemberService oAuth2MemberService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-//    private final JwtFilter jwtFilter;
+    private final JwtFilter jwtFilter;
 
     private final OAuth2SuccessHandler successHandler;
     private final JwtProvider jwtProvider;
@@ -39,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.addFilterAfter(jwtFilter, LogoutFilter.class);
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf().disable()
@@ -58,13 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 
                 .and()
-//                .addFilterBefore(new JwtFilter(jwtProvider),
-//                        UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
                 .successHandler(successHandler)
                 .userInfoEndpoint()
                 .userService(oAuth2MemberService);
 
-//        http.addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class);
+
     }
 }

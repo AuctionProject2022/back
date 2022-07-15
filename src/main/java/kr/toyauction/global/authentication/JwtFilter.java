@@ -1,21 +1,27 @@
 package kr.toyauction.global.authentication;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JwtFilter extends GenericFilterBean {
+@Component
+@RequiredArgsConstructor
+public class JwtFilter extends OncePerRequestFilter {
 
 	private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
@@ -24,25 +30,20 @@ public class JwtFilter extends GenericFilterBean {
 
 	private final JwtProvider jwtProvider;
 
-	public JwtFilter(JwtProvider jwtProvider) {
-		this.jwtProvider = jwtProvider;
-	}
-
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		String jwt = resolveToken(httpServletRequest);
-		String requestURI = httpServletRequest.getRequestURI();
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+		String token = resolveToken(request);
 
-		if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
-			Authentication authentication = jwtProvider.getAuthentication(jwt);
+		// Validation Access Token
+		if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
+			Authentication authentication = jwtProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
+			logger.debug(authentication.getName() + "의 인증정보 저장");
 		} else {
-			logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
+			logger.debug("유효한 JWT 토큰이 없습니다.");
 		}
 
-		chain.doFilter(request, response);
+		filterChain.doFilter(request, response);
 	}
 
 	private String resolveToken(HttpServletRequest request) {
