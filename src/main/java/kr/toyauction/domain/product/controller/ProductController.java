@@ -1,8 +1,5 @@
 package kr.toyauction.domain.product.controller;
 
-import kr.toyauction.domain.member.dto.MemberPostRequest;
-import kr.toyauction.domain.member.dto.MemberPostResponse;
-import kr.toyauction.domain.member.entity.Member;
 import kr.toyauction.domain.product.dto.ProductPostRequest;
 import kr.toyauction.domain.product.dto.ProductPostResponse;
 import kr.toyauction.domain.product.entity.Product;
@@ -101,6 +98,7 @@ public class ProductController {
 		return result;
 	}
 
+
 	@DeleteMapping(ProductPath.PRODUCTS + "/{productId}")
 	public String deleteProduct(@PathVariable final Long productId) {
 		String result = "{\n" +
@@ -111,19 +109,10 @@ public class ProductController {
 	}
 
 	@PostMapping(ProductPath.PRODUCTS)
-	public String postMember(@Validated @RequestBody final ProductPostRequest request) {
-		String result = "{\n" +
-				"  \"success\": \"true\",\n" +
-				"  \"data\": {\n" +
-				"    \"productId\": 1,\n" +
-				"    \"createDatetime\": \"2022-06-19 21:48:55\",\n" +
-				"    \"updateDatetime\": \"2022-06-19 21:48:55\",\n" +
-				"    \"enabled\": \"true\"\n" +
-				"  }\n" +
-				"}";
-
-        return result;
-    }
+	public SuccessResponse<ProductPostResponse> postProduct(@Validated @RequestBody final ProductPostRequest request) {
+		Product product = productService.registerProduct(request);
+		return SuccessResponseHelper.success(new ProductPostResponse(product));
+	}
 
     @PostMapping(ProductPath.PRODUCTS + "/bids")
     public String postBid() {
