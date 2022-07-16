@@ -19,6 +19,13 @@ public class ProductService {
     @Transactional
     public Product registerProduct(@NonNull final ProductPostRequest productPostRequest) {
 
+        //상품 설명 텍스트 입력시 자바스크립트 삽입 공격 방지
+        productPostRequest.getDetail()
+                .replaceAll("<","&lt;")
+                .replaceAll(">","&gt;")
+                .replaceAll("&","&amp;")
+                .replaceAll("\"","&quot;");
+
         Product product = Product.builder()
                 .productName(productPostRequest.getProductName())
                 .minBidPrice(productPostRequest.getMinBidPrice())
@@ -31,7 +38,7 @@ public class ProductService {
                 .exchangeType(productPostRequest.getExchangeType())
                 .productCondition(productPostRequest.getProductCondition())
                 .detail(productPostRequest.getDetail())
-//				.registerMemberId()
+				.registerMemberId(1) //임시로 registerId 임의값
                 .productSttus(ProductSttus.ON_SALE)
                 .build();
 

@@ -23,12 +23,12 @@ import javax.validation.constraints.Pattern;
 public class ProductPostRequest {
 
     @NotBlank
-    @Pattern(regexp = Regex.PRODUCTNAME, message = "{REGEX_PRODUCT NAME}")
+    @Pattern(regexp = Regex.PRODUCTNAME, message = "{REGEX_PRODUCT_NAME}")
     private String productName ;
 
-    private List<FileEntity> images ;
+    private List<Long> imageIds;
 
-    private FileEntity thumbnailImage ;
+    private Long thumbnailImageId;
 
     private int minBidPrice;
 
