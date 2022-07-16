@@ -68,6 +68,7 @@ class AlertControllerTest {
 								fieldWithPath("data.content[].alertTitle").description("알림 제목"),
 								fieldWithPath("data.content[].alertContents").description("알림 내용"),
 								fieldWithPath("data.content[].createDatetime").description("알림 생성일"),
+								fieldWithPath("data.content[].remainingTime").description("알림 경매 남은 시간"),
 								fieldWithPath("data.content[].url").description("알림 선택시 이동될 url"),
 								fieldWithPath("data.content[].alertRead").description("알림 읽음 여부")
 						)
