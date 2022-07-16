@@ -1,10 +1,18 @@
 package kr.toyauction.domain.product.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.toyauction.domain.product.dto.ProductPostRequest;
+import kr.toyauction.domain.product.entity.DeliveryOption;
+import kr.toyauction.domain.product.entity.ExchangeType;
+import kr.toyauction.domain.product.entity.ProductCondition;
+import kr.toyauction.domain.product.entity.PurchaseTime;
 import kr.toyauction.global.property.TestProperty;
 import kr.toyauction.global.property.Url;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,14 +22,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.relaxedResponseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -30,6 +39,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class})
 class ProductControllerTest {
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	private MockMvc mockMvc;
 
@@ -50,6 +62,61 @@ class ProductControllerTest {
 	}
 
 	@Test
+	@DisplayName("success : 상품을 등록 합니다.")
+	void postProduct() throws Exception {
+
+		ProductPostRequest request = ProductPostRequest.builder()
+				.productName("NIKE 에어포스")
+				.imageIds(List.of(66L,67L))
+				.thumbnailImageId(66L)
+				.minBidPrice(1000)
+				.rightPrice(100000)
+				.startSaleDateTime(LocalDateTime.now())
+				.endSaleDateTime(LocalDateTime.now().plusDays(7))
+				.unitPrice(1000)
+				.purchaseTime(PurchaseTime.PT_01)
+				.deliveryOption(DeliveryOption.DO_01)
+				.exchangeType(ExchangeType.EC_01)
+				.productCondition(ProductCondition.PC_01)
+				.detail("구매한지 한달밖에 안된 최고의 상품입니다.")
+				.build();
+
+		mockMvc.perform(post(Url.PRODUCT)
+						.contentType(MediaType.APPLICATION_JSON_VALUE)
+						.content(objectMapper.writeValueAsString(request)))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andDo(document("post-product",
+						requestHeaders(
+								headerWithName(HttpHeaders.CONTENT_TYPE).description("content type header")
+						),
+						requestFields(
+								fieldWithPath("productName").description("상품 이름"),
+								fieldWithPath("images").description("상품 이미지 파일 번호"),
+								fieldWithPath("thumbnailImage").description("상품 이미지 썸네일 번호"),
+								fieldWithPath("minBidPrice").description("최소 입찰 금액"),
+								fieldWithPath("rightPrice").description("즉시 구매 금액"),
+								fieldWithPath("startSaleDateTime").description("경매 시작일"),
+								fieldWithPath("endSaleDateTime").description("경매 종료일"),
+								fieldWithPath("unitPrice").description("입찰 최소 단위"),
+								fieldWithPath("purchaseTime").description("구매 시기"),
+								fieldWithPath("deliveryOption").description("배송 옵션"),
+								fieldWithPath("exchangeType").description("교환 옵션"),
+								fieldWithPath("productCondition").description("상품 상태"),
+								fieldWithPath("detail").description("상품 상세 설명")
+
+						),
+						responseHeaders(
+								headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type")
+						),
+						relaxedResponseFields(
+								fieldWithPath("success").description("성공 여부")
+						)
+				));
+	}
+
+	@Test
+	@DisplayName("success : 상품을 조회 합니다.")
 	void getProduct() throws Exception {
 
 		Long productId = 5L;
@@ -98,6 +165,29 @@ class ProductControllerTest {
 								fieldWithPath("data.productSttus.name").description("판매 상태 이름"),
 								fieldWithPath("data.createDatetime").description("등록일"),
 								fieldWithPath("data.updateDatetime").description("수정일")
+						)
+				));
+	}
+
+	@Test
+	@DisplayName("success : 상품을 삭제 합니다.")
+	void deleteProduct() throws Exception {
+
+		Long productId = 5L;
+
+		mockMvc.perform(delete(Url.PRODUCT + "/{productId}", productId)
+						.contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andDo(document("delete-product",
+						pathParameters(
+								parameterWithName("productId").description("상품 번호")
+						),
+						responseHeaders(
+								headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type")
+						),
+						relaxedResponseFields(
+								fieldWithPath("success").description("성공 여부")
 						)
 				));
 	}

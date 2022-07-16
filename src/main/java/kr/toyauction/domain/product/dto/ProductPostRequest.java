@@ -1,18 +1,15 @@
 package kr.toyauction.domain.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.product.entity.DeliveryOption;
 import kr.toyauction.domain.product.entity.ExchangeType;
 import kr.toyauction.domain.product.entity.ProductCondition;
 import kr.toyauction.domain.product.entity.PurchaseTime;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,9 +21,9 @@ public class ProductPostRequest {
     @NotBlank
     private String productName ;
 
-    private List<FileEntity> images ;
+    private List<Long> imageIds;
 
-    private FileEntity thumbnailImage ;
+    private Long thumbnailImageId;
 
     private int minBidPrice;
 
