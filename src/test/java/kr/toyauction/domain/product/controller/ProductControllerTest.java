@@ -67,8 +67,8 @@ class ProductControllerTest {
 
 		ProductPostRequest request = ProductPostRequest.builder()
 				.productName("NIKE 에어포스")
-				.images(List.of(66L,67L))
-				.thumbnailImage(66L)
+				.imageIds(List.of(66L,67L))
+				.thumbnailImageId(66L)
 				.minBidPrice(1000)
 				.rightPrice(100000)
 				.startSaleDateTime(LocalDateTime.now())

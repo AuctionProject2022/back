@@ -21,9 +21,9 @@ public class ProductPostRequest {
     @NotBlank
     private String productName ;
 
-    private List<Long> images ;
+    private List<Long> imageIds;
 
-    private Long thumbnailImage ;
+    private Long thumbnailImageId;
 
     private int minBidPrice;
 
