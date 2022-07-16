@@ -92,8 +92,8 @@ class ProductControllerTest {
 						),
 						requestFields(
 								fieldWithPath("productName").description("상품 이름"),
-								fieldWithPath("images").description("상품 이미지 파일 번호"),
-								fieldWithPath("thumbnailImage").description("상품 이미지 썸네일 번호"),
+								fieldWithPath("imageIds").description("상품 이미지 파일 번호"),
+								fieldWithPath("thumbnailImageId").description("상품 이미지 썸네일 번호"),
 								fieldWithPath("minBidPrice").description("최소 입찰 금액"),
 								fieldWithPath("rightPrice").description("즉시 구매 금액"),
 								fieldWithPath("startSaleDateTime").description("경매 시작일"),
