@@ -1,6 +1,6 @@
 package kr.toyauction.domain.product.controller;
 
-import kr.toyauction.domain.product.property.ProductPath;
+import kr.toyauction.global.property.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProductController {
 
-	@GetMapping(value = ProductPath.PRODUCTS + "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = Url.PRODUCT + "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getProduct(@PathVariable final Long productId) {
 
 		String result = "{\n" +
@@ -90,7 +90,7 @@ public class ProductController {
 		return result;
 	}
 
-	@DeleteMapping(value = ProductPath.PRODUCTS + "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = Url.PRODUCT  + "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String deleteProduct(@PathVariable final Long productId) {
 		String result = "{\n" +
 				"  \"success\": \"true\"\n" +
@@ -99,7 +99,7 @@ public class ProductController {
 		return result;
 	}
 
-	@PostMapping(value = ProductPath.PRODUCTS, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = Url.PRODUCT , produces = MediaType.APPLICATION_JSON_VALUE)
 	public String postProduct() {
 		String result = "{\n" +
 				"  \"success\": \"true\",\n" +
@@ -114,7 +114,7 @@ public class ProductController {
 		return result;
 	}
 
-	@PostMapping(value = ProductPath.PRODUCTS + "/bids", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = Url.PRODUCT  + "/bids", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String postBid() {
 		String result = "{\n" +
 				"  \"success\": \"true\",\n" +
@@ -127,7 +127,7 @@ public class ProductController {
 		return result;
 	}
 
-	@GetMapping(value = ProductPath.PRODUCTS + "/autocomplete", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = Url.PRODUCT  + "/autocomplete", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getAutoComplete(@RequestParam String prductName) {
 		String result = "{\n" +
 				"  \"success\": \"true\",\n" +

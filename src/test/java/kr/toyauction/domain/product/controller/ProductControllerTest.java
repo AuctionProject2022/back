@@ -1,7 +1,7 @@
 package kr.toyauction.domain.product.controller;
 
-import kr.toyauction.domain.product.property.ProductPath;
 import kr.toyauction.global.property.TestProperty;
+import kr.toyauction.global.property.Url;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -23,6 +22,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.relaxedResponseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,11 +51,17 @@ class ProductControllerTest {
 
 	@Test
 	void getProduct() throws Exception {
-		mockMvc.perform(get(ProductPath.PRODUCTS + "/5")
+
+		Long productId = 5L;
+
+		mockMvc.perform(get(Url.PRODUCT + "/{productId}", productId)
 						.contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andDo(document("get-product",
+						pathParameters(
+								parameterWithName("productId").description("상품 번호")
+						),
 						responseHeaders(
 								headerWithName(HttpHeaders.CONTENT_TYPE).description("Content Type")
 						),
