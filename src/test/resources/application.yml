@@ -6,8 +6,8 @@ logging:
     kr.toyauction: debug # project logging
     org:
       springframework:
-        transaction: info # spring transaction logging
-        web: info # spring web logging
+        transaction: debug # spring transaction logging
+        web: debug # spring web logging
         security: debug # spring security logging
         orm:
           jpa: debug # spring orm jpa logging
@@ -15,13 +15,6 @@ logging:
         SQL: debug # hibernate sql logging
         type.descriptor.sql: trace # DDL 시 입력된 실제 Value 값을 확인할려면 trace 으로 사용
 spring:
-  h2:
-    console:
-      enabled: true # h2 console 사용
-      path: /h2 # localhost:port/h2 로 접근 가능
-      settings:
-        trace: false # Print additional trace information
-        web-allow-others: true  # 브라우저로 접근가능하게 하기
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb
@@ -29,7 +22,6 @@ spring:
     password:
   jpa:
     open-in-view: false # 지연 로딩을 Controller 까지 확장 하는것 을 금지 한다. 자세한 내용은 OSIV 패턴 참고
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # mysql DB engine
     hibernate:
       ddl-auto: create # DDL AUTO 전략
     properties:
@@ -43,11 +35,19 @@ spring:
         default-page-size: 20 # page default size
   servlet:
     multipart:
-      enabled: true # file upload true
-      max-file-size: 1024MB # single file max size
-      max-request-size: 1024MB # total file request max size
+      enabled: true # fileEntity upload true
+      max-file-size: 1024MB # single fileEntity max size
+      max-request-size: 1024MB # total fileEntity request max size
   messages:
     basename: classpath:/i18n/messages, classpath:/i18n/errors # messages 경로
   web:
     resources:
-      add-mappings: false # url 으로 resources 접근 여부
+      add-mappings: true # url 으로 resources 접근 여부
+
+property:
+  global:
+    aws-s3-host: https://cdn.toyauction.kr/
+  intra:
+    aws-s3-bucket: toy-auction
+    aws-s3-access-key-id: access_key_id
+    aws-s3-secret-access-key: secret_access_key
