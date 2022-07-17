@@ -2,10 +2,10 @@ package kr.toyauction.domain.file.controller;
 
 import kr.toyauction.domain.file.dto.FilePostRequest;
 import kr.toyauction.domain.file.entity.FileEntity;
-import kr.toyauction.domain.file.property.FilePath;
 import kr.toyauction.domain.file.service.FileService;
 import kr.toyauction.global.error.GlobalErrorCode;
 import kr.toyauction.global.property.TestProperty;
+import kr.toyauction.global.property.Url;
 import kr.toyauction.global.util.CommonUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -96,7 +96,7 @@ class FileControllerTest {
 		given(fileService.save(any(FilePostRequest.class))).willReturn(fileEntity);
 
 		// when
-		ResultActions resultActions = mockMvc.perform(multipart(FilePath.FILE)
+		ResultActions resultActions = mockMvc.perform(multipart(Url.FILE)
 						.file(file))
 				.andDo(print())
 				.andDo(document("post-file",
@@ -129,9 +129,10 @@ class FileControllerTest {
 	void postFileIsFileNull() throws Exception {
 
 		// given
-
+		
+		
 		// when
-		ResultActions resultActions = mockMvc.perform(post(FilePath.FILE))
+		ResultActions resultActions = mockMvc.perform(post(Url.FILE))
 				.andDo(print());
 
 		// then
@@ -153,7 +154,7 @@ class FileControllerTest {
 				resourceLoader.getResource(TestProperty.TXT_CLASSPATH).getInputStream());
 
 		// when
-		ResultActions resultActions = mockMvc.perform(multipart(FilePath.FILE)
+		ResultActions resultActions = mockMvc.perform(multipart(Url.FILE)
 						.file(file))
 				.andDo(print());
 

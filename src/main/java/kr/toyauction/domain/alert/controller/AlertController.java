@@ -1,11 +1,12 @@
 package kr.toyauction.domain.alert.controller;
 
-import kr.toyauction.domain.alert.property.AlertPath;
+import kr.toyauction.global.property.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AlertController {
 
-    @GetMapping(value=AlertPath.ALERTS, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value= Url.ALERT, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAlerts(){
         return "{\n" +
                 "\t\"success\" : \"true\",\n" +
@@ -25,6 +26,7 @@ public class AlertController {
                 "\t\t\t\t\"alertContents\" : \"<auctionTitle>이케아에서 산 홀더</auctionTitle> 경매에\\n <auctionColor>내 경매가 38,000원 낙찰완료</auctionColor> 되었습니다.\",\n" +
                 "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
                 "\t\t\t\t\"url\" : \"/프론트url/product/12\",\n" +
+                "                \"remainingTime\" : null,\n" +
                 "\t\t\t\t\"alertRead\" : false\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
@@ -33,6 +35,7 @@ public class AlertController {
                 "\t\t\t\t\"alertContents\" : \"<auctionTitle>이케아에서 산 홀더</auctionTitle> 경매에\\n <auctionColor>내 경매가 38,000원 낙찰실패<auctionColor> 하였습니다.\\n<auctionColor>최종 낙찰가는 56,000원</auctionColor> 입니다.\",\n" +
                 "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
                 "\t\t\t\t\"url\" : \"/프론트url/product/123\",\n" +
+                "                \"remainingTime\" : null,\n" +
                 "\t\t\t\t\"alertRead\" : false\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
@@ -42,6 +45,7 @@ public class AlertController {
                 "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
                 "                \"remainingTime\" : \"238704\",\n" +
                 "\t\t\t\t\"url\" : \"/프론트url/product/122\",\n" +
+                "                \"remainingTime\" : null,\n" +
                 "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
@@ -50,6 +54,7 @@ public class AlertController {
                 "\t\t\t\t\"alertContents\" : \"<auctionTitle>이케아에서 산 홀더</auctionTitle> 경매가\\n <auctionColor>내 경매가 38,000원 낙찰완료</auctionColor> 되었습니다.\",\n" +
                 "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
                 "\t\t\t\t\"url\" : \"/프론트url/product/112\",\n" +
+                "                \"remainingTime\" : null,\n" +
                 "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
@@ -58,6 +63,7 @@ public class AlertController {
                 "\t\t\t\t\"alertContents\" : \"<auctionTitle>이케아에서 산 홀더</auctionTitle> 경매가\\n <auctionColor>응찰자 0명으로 낙찰실패</auctionColor> 하였습니다.\\n<auctionColor>재판매 2회 가능</auctionColor>합니다.\",\n" +
                 "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
                 "\t\t\t\t\"url\" : \"/프론트url/product/152\",\n" +
+                "                \"remainingTime\" : null,\n" +
                 "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t},\n" +
                 "\t\t\t{\n" +
@@ -67,6 +73,7 @@ public class AlertController {
                 "\t\t\t\t\"createDatetime\" : \"2022-08-03 22:03:16\",\n" +
                 "                \"remainingTime\" : \"238704\",\n" +
                 "\t\t\t\t\"url\" : \"/프론트url/product/182\",\n" +
+                "                \"remainingTime\" : null,\n" +
                 "\t\t\t\t\"alertRead\" : true\n" +
                 "\t\t\t}\n" +
                 "\t\t],\n" +
@@ -97,7 +104,7 @@ public class AlertController {
                 "}";
     }
 
-    @GetMapping(AlertPath.ALERTS+"/{alertId}")
+    @PostMapping(Url.ALERT +"/{alertId}")
     public String getAlert(@PathVariable final Long alertId){
         return "{\n" +
                 "\t\"success\" : true\n" +
