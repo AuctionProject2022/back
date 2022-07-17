@@ -74,10 +74,10 @@ class ProductControllerTest {
 				.startSaleDateTime(LocalDateTime.now())
 				.endSaleDateTime(LocalDateTime.now().plusDays(7))
 				.unitPrice(1000)
-				.purchaseTime(PurchaseTime.PT_01)
-				.deliveryOption(DeliveryOption.DO_01)
-				.exchangeType(ExchangeType.EC_01)
-				.productCondition(ProductCondition.PC_01)
+				.purchaseTime(PurchaseTime.SIX_MONTHS)
+				.deliveryOption(DeliveryOption.DELIVERY)
+				.exchangeType(ExchangeType.IMPOSSIBLE)
+				.productCondition(ProductCondition.CLEAN)
 				.detail("구매한지 한달밖에 안된 최고의 상품입니다.")
 				.build();
 
