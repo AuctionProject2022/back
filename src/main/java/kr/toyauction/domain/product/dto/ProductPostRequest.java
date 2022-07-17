@@ -1,13 +1,13 @@
 package kr.toyauction.domain.product.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import kr.toyauction.domain.product.entity.DeliveryOption;
 import kr.toyauction.domain.product.entity.ExchangeType;
 import kr.toyauction.domain.product.entity.ProductCondition;
 import kr.toyauction.domain.product.entity.PurchaseTime;
+import kr.toyauction.global.property.Regex;
 import lombok.*;
-
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,6 +19,7 @@ import java.util.List;
 public class ProductPostRequest {
 
     @NotBlank
+    @Pattern(regexp = Regex.PRODUCTNAME, message = "{REGEX_PRODUCT_NAME}")
     private String productName ;
 
     private List<Long> imageIds;
@@ -29,12 +30,8 @@ public class ProductPostRequest {
 
     private int rightPrice;
 
-    //@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     LocalDateTime startSaleDateTime;
 
-    //@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     LocalDateTime endSaleDateTime;
 
     private int unitPrice;

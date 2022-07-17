@@ -1,5 +1,12 @@
 package kr.toyauction.domain.product.entity;
 
 public enum ExchangeType {
-    EC_01, EC_02, EC_03
+    POSSIBLE("교환가능"),
+    IMPOSSIBLE("교환불가");
+
+    private final String description;
+
+    ExchangeType(String description) {
+        this.description = description;
+    }
 }
