@@ -45,8 +45,9 @@ spring:
       add-mappings: true # url 으로 resources 접근 여부
 
 property:
-  intra:
+  global:
     aws-s3-host: https://cdn.toyauction.kr/
+  intra:
     aws-s3-bucket: toy-auction
     aws-s3-access-key-id: access_key_id
     aws-s3-secret-access-key: secret_access_key

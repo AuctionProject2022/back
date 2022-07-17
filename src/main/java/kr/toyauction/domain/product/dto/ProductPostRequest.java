@@ -1,19 +1,15 @@
 package kr.toyauction.domain.product.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.product.entity.DeliveryOption;
 import kr.toyauction.domain.product.entity.ExchangeType;
 import kr.toyauction.domain.product.entity.ProductCondition;
 import kr.toyauction.domain.product.entity.PurchaseTime;
 import kr.toyauction.global.property.Regex;
 import lombok.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter

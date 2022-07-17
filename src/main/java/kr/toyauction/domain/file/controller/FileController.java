@@ -3,12 +3,12 @@ package kr.toyauction.domain.file.controller;
 import kr.toyauction.domain.file.dto.FilePostRequest;
 import kr.toyauction.domain.file.dto.FilePostResponse;
 import kr.toyauction.domain.file.entity.FileEntity;
-import kr.toyauction.domain.file.property.FilePath;
 import kr.toyauction.domain.file.service.FileService;
 import kr.toyauction.domain.file.validation.FileValidator;
 import kr.toyauction.global.dto.SuccessResponse;
 import kr.toyauction.global.dto.SuccessResponseHelper;
-import kr.toyauction.infra.property.IntraProperty;
+import kr.toyauction.global.property.GlobalProperty;
+import kr.toyauction.global.property.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -24,16 +24,16 @@ public class FileController {
 
 	private final FileService fileService;
 	private final FileValidator fileValidator;
-	private final IntraProperty intraProperty;
+	private final GlobalProperty globalProperty;
 
 	@InitBinder
 	protected void initBinders(WebDataBinder binder) {
 		binder.addValidators(fileValidator);
 	}
 
-	@PostMapping(FilePath.IMAGES)
-	public SuccessResponse<FilePostResponse> postImage(@Validated final FilePostRequest filePostRequest) {
-		FileEntity fileEntity = fileService.save(filePostRequest);
-		return SuccessResponseHelper.success(new FilePostResponse(fileEntity, intraProperty.getAwsS3Host()));
+	@PostMapping(value = Url.FILE)
+	public SuccessResponse<FilePostResponse> postFile(@Validated FilePostRequest request) {
+		FileEntity fileEntity = fileService.save(request);
+		return SuccessResponseHelper.success(new FilePostResponse(fileEntity, globalProperty.getAwsS3Host()));
 	}
 }

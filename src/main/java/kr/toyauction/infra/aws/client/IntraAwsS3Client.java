@@ -38,6 +38,7 @@ public class IntraAwsS3Client {
 					multipartFile.getInputStream(), multipartFile.getSize());
 			return s3Client.putObject(putObjectRequest, requestBody);
 		} catch (IOException e) {
+			log.error("IntraAwsS3Client pubObject is failed");
 			throw new BusinessException(GlobalErrorCode.G0000); // TODO
 		}
 	}
