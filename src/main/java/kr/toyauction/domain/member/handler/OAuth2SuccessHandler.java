@@ -1,12 +1,11 @@
 package kr.toyauction.domain.member.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.toyauction.domain.member.dto.GoogleResponse;
 import kr.toyauction.domain.member.dto.Token;
 import kr.toyauction.domain.member.entity.Member;
-import kr.toyauction.domain.member.enums.AuthProvider;
-import kr.toyauction.domain.member.enums.Role;
+import kr.toyauction.domain.member.entity.AuthProvider;
+import kr.toyauction.domain.member.entity.Role;
 import kr.toyauction.domain.member.repository.MemberRepository;
 import kr.toyauction.global.authentication.JwtProvider;
 import kr.toyauction.global.dto.SuccessResponse;

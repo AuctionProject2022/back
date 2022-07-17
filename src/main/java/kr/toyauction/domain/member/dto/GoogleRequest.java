@@ -1,7 +1,5 @@
 package kr.toyauction.domain.member.dto;
 
-import kr.toyauction.domain.member.entity.Member;
-import kr.toyauction.domain.member.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 

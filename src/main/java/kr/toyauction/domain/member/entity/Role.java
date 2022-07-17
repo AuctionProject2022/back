@@ -1,4 +1,4 @@
-package kr.toyauction.domain.member.enums;
+package kr.toyauction.domain.member.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

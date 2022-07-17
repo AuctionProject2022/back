@@ -1,7 +1,7 @@
 package kr.toyauction.domain.member.service;
 
 import kr.toyauction.domain.member.dto.GoogleRequest;
-import kr.toyauction.domain.member.enums.Role;
+import kr.toyauction.domain.member.entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

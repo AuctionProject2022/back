@@ -5,16 +5,15 @@ import kr.toyauction.domain.member.service.OAuth2MemberService;
 import kr.toyauction.global.authentication.JwtAccessDeniedHandler;
 import kr.toyauction.global.authentication.JwtAuthenticationEntryPoint;
 import kr.toyauction.global.authentication.JwtFilter;
-import kr.toyauction.global.authentication.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtFilter jwtFilter;
 
     private final OAuth2SuccessHandler successHandler;
-    private final JwtProvider jwtProvider;
 
     @Override
     public void configure(WebSecurity web) {
@@ -54,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()// 모든 url 허용
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/**").hasRole("USER")// 모든 url 허용
                 .anyRequest().authenticated()
 
                 .and()

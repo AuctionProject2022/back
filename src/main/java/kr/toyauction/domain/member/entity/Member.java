@@ -1,7 +1,5 @@
 package kr.toyauction.domain.member.entity;
 
-import kr.toyauction.domain.member.enums.AuthProvider;
-import kr.toyauction.domain.member.enums.Role;
 import kr.toyauction.global.entity.BaseEntity;
 import kr.toyauction.global.entity.EntitySupport;
 import kr.toyauction.global.exception.DomainValidationException;
