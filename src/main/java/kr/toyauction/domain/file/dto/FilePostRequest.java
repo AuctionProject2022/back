@@ -1,6 +1,5 @@
 package kr.toyauction.domain.file.dto;
 
-import kr.toyauction.domain.file.entity.FileType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,9 +11,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Builder
 public class FilePostRequest {
-
-	@NotNull
-	private FileType type;
 
 	@NotNull
 	private MultipartFile file;

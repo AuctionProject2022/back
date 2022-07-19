@@ -14,9 +14,9 @@ public class CommonUtils {
 	 */
 	public static String generateS3PrefixKey() {
 		LocalDateTime now = LocalDateTime.now();
-		return "image/" +
+		return "files/" +
 				now.getYear() +
-				"/" +
+				"-" +
 				now.getMonthValue() +
 				"-" +
 				now.getDayOfMonth() +
