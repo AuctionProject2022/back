@@ -9,15 +9,15 @@ import lombok.Getter;
 @Getter
 public class DomainNotFoundException extends BusinessException {
 
-    private final Long id;
+	private final Long id;
 
-    public DomainNotFoundException() {
-        super(GlobalErrorCode.G0004);
-        this.id = null;
-    }
+	public DomainNotFoundException() {
+		super(GlobalErrorCode.G0002);
+		this.id = null;
+	}
 
-    public DomainNotFoundException(Long id) {
-        super(GlobalErrorCode.G0004);
-        this.id = id;
-    }
+	public DomainNotFoundException(Long id) {
+		super(GlobalErrorCode.G0002);
+		this.id = id;
+	}
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
@@ -30,7 +29,6 @@ public class IntraAwsS3Client {
 		PutObjectRequest putObjectRequest = PutObjectRequest.builder()
 				.bucket(intraProperty.getAwsS3Bucket())
 				.key(key)
-				.acl(ObjectCannedACL.PUBLIC_READ)
 				.build();
 
 		try {
@@ -38,6 +36,7 @@ public class IntraAwsS3Client {
 					multipartFile.getInputStream(), multipartFile.getSize());
 			return s3Client.putObject(putObjectRequest, requestBody);
 		} catch (IOException e) {
+			log.error("IntraAwsS3Client pubObject is failed");
 			throw new BusinessException(GlobalErrorCode.G0000); // TODO
 		}
 	}

@@ -1,18 +1,15 @@
 package kr.toyauction.domain.product.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import kr.toyauction.domain.file.entity.FileEntity;
 import kr.toyauction.domain.product.entity.DeliveryOption;
 import kr.toyauction.domain.product.entity.ExchangeType;
 import kr.toyauction.domain.product.entity.ProductCondition;
 import kr.toyauction.domain.product.entity.PurchaseTime;
+import kr.toyauction.global.property.Regex;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -22,22 +19,19 @@ import javax.validation.constraints.NotBlank;
 public class ProductPostRequest {
 
     @NotBlank
+    @Pattern(regexp = Regex.PRODUCTNAME, message = "{REGEX_PRODUCT_NAME}")
     private String productName ;
 
-    private List<FileEntity> images ;
+    private List<Long> imageIds;
 
-    private FileEntity thumbnailImage ;
+    private Long thumbnailImageId;
 
     private int minBidPrice;
 
     private int rightPrice;
 
-    //@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     LocalDateTime startSaleDateTime;
 
-    //@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     LocalDateTime endSaleDateTime;
 
     private int unitPrice;
