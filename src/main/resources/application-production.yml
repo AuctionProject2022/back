@@ -17,14 +17,14 @@ logging:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://auction.c38ary0y4f5o.ap-northeast-2.rds.amazonaws.com/toy?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://toydb.c38ary0y4f5o.ap-northeast-2.rds.amazonaws.com/toy?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: admin
-    password: ${DB.PASSWORD}
+    password: ${db_password}
   jpa:
     open-in-view: false # 지연 로딩을 Controller 까지 확장 하는것 을 금지 한다. 자세한 내용은 OSIV 패턴 참고
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # mysql DB engine
     hibernate:
-      ddl-auto: validate # DDL AUTO 전략
+      ddl-auto: update # DDL AUTO 전략
     properties:
       hibernate:
         format_sql: true # sql query pretty option
@@ -43,11 +43,29 @@ spring:
     basename: classpath:/i18n/messages, classpath:/i18n/errors # messages 경로
   web:
     resources:
-      add-mappings: false # url 으로 resources 접근 여부
+      add-mappings: true # url 으로 resources 접근 여부
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${google_client_id}
+            client-secret : ${google_client_secret}
+            scope :
+              - profile
+              - email
 
 jwt:
   header: Authorization
-  secret: ekKJHSRFGLKJHoWH078hgr087H0r7gh0WR7GHw0rg87hwrg7hwroiguhwroiguhOIGUHoiughrWOIGUHWOIRGUHgr87hwrg87hWRG87HwrghWRFGHW8EFH367267H4FG87H24fg0h
+  secret: ekKJHSRFGLKJHoWH078hgr087H0r7gh0WR7GHw0rg87hwrg7hwroiguhwroiguhOIGUHoiughrWOIGUHWOIRGUHgr87hwrg87hWRG87HwrghWRFGHW8EFH367267H4FG87H24fg0h # 추후 환경변수 동적 등록이 가능 할때 값 변경 후 등록 예정
   access_token_expiration: 1800000 # 30분
   refresh_token_expiration: 2592000000 # 한달
   json_key: toyauction
+
+property:
+  global:
+    aws-s3-host: https://cdn.toyauction.kr/
+  intra:
+    aws-s3-bucket: toy-auction
+    aws-s3-access-key-id: AKIAQCK75HOOZNQIGAFU
+    aws-s3-secret-access-key: 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
