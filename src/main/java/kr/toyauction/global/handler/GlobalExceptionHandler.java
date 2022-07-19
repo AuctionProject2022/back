@@ -5,6 +5,7 @@ import kr.toyauction.global.dto.ErrorResponseHelper;
 import kr.toyauction.global.error.GlobalErrorCode;
 import kr.toyauction.global.exception.BusinessException;
 import kr.toyauction.global.exception.DomainNotFoundException;
+import kr.toyauction.global.exception.NoAuthorityException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,13 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class GlobalExceptionHandler {
 
     private final ErrorResponseHelper errorResponseHelper;
+
+    @ExceptionHandler(NoAuthorityException.class)
+    public ResponseEntity<ErrorResponse> handleNoAuthorityException(NoAuthorityException e) {
+        log.error("NoAuthorityException : ", e);
+
+        return errorResponseHelper.code(e.getErrorCode());
+    }
 
     @ExceptionHandler(DomainNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleDomainNotFoundException(DomainNotFoundException e) {

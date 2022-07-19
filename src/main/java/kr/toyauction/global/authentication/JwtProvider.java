@@ -1,6 +1,7 @@
 package kr.toyauction.global.authentication;
 
 import kr.toyauction.domain.member.dto.Token;
+import kr.toyauction.global.exception.NoAuthorityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class JwtProvider implements InitializingBean {
 	private final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
-	private static final String AUTHORITIES_KEY = "auth";
 
 	@Value("${jwt.secret}")
 	private String secret;
@@ -56,13 +56,13 @@ public class JwtProvider implements InitializingBean {
 		return new Token(
 				Jwts.builder()
 						.setSubject(String.valueOf(memberId))
-						.claim(AUTHORITIES_KEY, authentication.getAuthorities())
+						.claim(JwtCode.AUTHORITY.getDescription(), authentication.getAuthorities())
 						.signWith(key, SignatureAlgorithm.HS512)
 						.setExpiration(accessValidity)
 						.compact(),
 				Jwts.builder()
 						.setSubject(String.valueOf(memberId))
-						.claim(AUTHORITIES_KEY, authentication.getAuthorities())
+						.claim(JwtCode.AUTHORITY.getDescription(), authentication.getAuthorities())
 						.signWith(key, SignatureAlgorithm.HS512)
 						.setExpiration(refreshValidity)
 						.compact()
@@ -72,12 +72,12 @@ public class JwtProvider implements InitializingBean {
 	public Authentication getAuthentication(String token) {
 		Claims claims = parseClaims(token);
 
-		if (claims.get(AUTHORITIES_KEY) == null) {
-			throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+		if (claims.get(JwtCode.AUTHORITY.getDescription()) == null) {
+			throw new NoAuthorityException();
 		}
 
 		Collection<? extends GrantedAuthority> authorities =
-				Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+				Arrays.stream(claims.get(JwtCode.AUTHORITY.getDescription()).toString().split(","))
 						.map(SimpleGrantedAuthority::new)
 						.collect(Collectors.toList());
 
@@ -93,7 +93,7 @@ public class JwtProvider implements InitializingBean {
 		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
 			logger.info("잘못된 JWT 서명입니다.");
 		} catch (ExpiredJwtException e) {
-			request.setAttribute("exception", JwtErrorCode.EXPIRED_TOKEN.getDescription());
+			request.setAttribute(JwtCode.EXCEPTION_PRODUCE.getDescription(), JwtCode.ERROR_EXPIRED_TOKEN.getDescription());	// 만료된 토큰을 구별하기 위해서
 			logger.info("만료된 JWT 토큰입니다.");
 		} catch (UnsupportedJwtException e) {
 			logger.info("지원되지 않는 JWT 토큰입니다.");

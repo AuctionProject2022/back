@@ -2,7 +2,6 @@ package kr.toyauction.global.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.toyauction.global.dto.ErrorResponse;
-import kr.toyauction.global.dto.ErrorResponseHelper;
 import kr.toyauction.global.error.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,21 +22,19 @@ import java.io.OutputStream;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
-	private final ErrorResponseHelper errorResponseHelper;
 	private final MessageSource messageSource;
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
 		log.error("UnAuthorizaed!!! message : " + authException.getMessage());
-		String exception = (String)request.getAttribute("exception");
+		String exception = (String)request.getAttribute(JwtCode.EXCEPTION_PRODUCE.getDescription());
 
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		GlobalErrorCode errorCode = GlobalErrorCode.G0007;
 		ErrorResponse errorResponse = new ErrorResponse(errorCode.name(),messageSource.getMessage(errorCode.name(), null, LocaleContextHolder.getLocale()));
 
-		if (exception.equals(JwtErrorCode.EXPIRED_TOKEN.getDescription())){
+		if (exception.equals(JwtCode.ERROR_EXPIRED_TOKEN.getDescription())){
 			errorCode = GlobalErrorCode.G0008;
 			errorResponse.setCode(errorCode.name());
 			errorResponse.setMessage(messageSource.getMessage(errorCode.name(), null, LocaleContextHolder.getLocale()));
