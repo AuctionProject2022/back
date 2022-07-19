@@ -37,13 +37,13 @@ public class Product extends BaseEntity implements EntitySupport {
     private LocalDateTime endSaleDateTime;
 
     private int unitPrice;
-    
+
     @Enumerated(EnumType.STRING)
-	private PurchaseTime purchaseTime;
-    
+    private PurchaseTime purchaseTime;
+
     @Enumerated(EnumType.STRING)
     private DeliveryOption deliveryOption;
-    
+
     @Enumerated(EnumType.STRING)
     private ExchangeType exchangeType;
 
@@ -52,9 +52,9 @@ public class Product extends BaseEntity implements EntitySupport {
 
     @Column(length = 4000)
     private String detail;
-    
+
     private Long registerMemberId;
-    
+
     @Enumerated(EnumType.STRING)
     private ProductSttus productSttus;
 
@@ -114,26 +114,26 @@ public class Product extends BaseEntity implements EntitySupport {
 
         //최소 구매가는 100원 부터 입력할 수 있다.
         if (minBidPrice < 100) {
-        	log.error("minBidPrice : {}", minBidPrice);
+            log.error("minBidPrice : {}", minBidPrice);
             throw new DomainValidationException();
         }
 
         //즉시구매가는 최대 5000만원 이내로 입력할 수 있다.
         if (rightPrice < 100 || rightPrice > 50000000) {
-        	log.error("rightPrice : {}", rightPrice);
+            log.error("rightPrice : {}", rightPrice);
             throw new DomainValidationException();
         }
 
         //입찰단위 가격은 1000원 단위로 입력할 수 있다.
         //판매단위 가격은 최대 1000만원 까지 입력할 수 있다.
         if (unitPrice % 1000 != 0 || unitPrice > 10000000) {
-        	log.error("unitPrice : {}", unitPrice);
+            log.error("unitPrice : {}", unitPrice);
             throw new DomainValidationException();
         }
 
         //판매종료기간은 판매시작기간보다 더 빠를 수 없다.
         if (endSaleDateTime.isBefore(startSaleDateTime)) {
-        	log.error("startSaleDateTime : {}", startSaleDateTime);
+            log.error("startSaleDateTime : {}", startSaleDateTime);
             throw new DomainValidationException();
         }
 

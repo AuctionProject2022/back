@@ -1,8 +1,8 @@
-package kr.toyauction.domain.file.controller;
+package kr.toyauction.domain.image.controller;
 
-import kr.toyauction.domain.file.dto.FilePostRequest;
-import kr.toyauction.domain.file.entity.FileEntity;
-import kr.toyauction.domain.file.service.FileService;
+import kr.toyauction.domain.image.dto.ImagePostRequest;
+import kr.toyauction.domain.image.entity.ImageEntity;
+import kr.toyauction.domain.image.service.ImageService;
 import kr.toyauction.global.error.GlobalErrorCode;
 import kr.toyauction.global.property.TestProperty;
 import kr.toyauction.global.property.Url;
@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class})
-class FileControllerTest {
+class ImageControllerTest {
 
 	MockMvc mockMvc;
 
@@ -52,7 +52,7 @@ class FileControllerTest {
 	ResourceLoader resourceLoader;
 
 	@MockBean
-	FileService fileService;
+	ImageService imageService;
 
 	@BeforeEach
 	public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
@@ -71,40 +71,40 @@ class FileControllerTest {
 	}
 
 	@Test
-	@DisplayName("success : file 생성 ")
+	@DisplayName("success : image 생성 ")
 	void postFile() throws Exception {
 
 		// given
 		MockMultipartFile file = new MockMultipartFile(
-				"file",
+				"image",
 				TestProperty.PNG_FILENAME,
 				MediaType.IMAGE_PNG_VALUE,
 				resourceLoader.getResource(TestProperty.PNG_CLASSPATH).getInputStream());
 
-		FileEntity fileEntity = FileEntity.builder()
+		ImageEntity imageEntity = ImageEntity.builder()
 				.id(1L)
 				.memberId(0L)
 				.path(CommonUtils.generateS3PrefixKey() + CommonUtils.generateRandomFilename(file.getOriginalFilename()))
 				.build();
-		Field createDatetime = fileEntity.getClass().getSuperclass().getDeclaredField("createDatetime");
+		Field createDatetime = imageEntity.getClass().getSuperclass().getDeclaredField("createDatetime");
 		createDatetime.setAccessible(true);
-		createDatetime.set(fileEntity, LocalDateTime.now());
-		Field updateDateTime = fileEntity.getClass().getSuperclass().getDeclaredField("updateDatetime");
+		createDatetime.set(imageEntity, LocalDateTime.now());
+		Field updateDateTime = imageEntity.getClass().getSuperclass().getDeclaredField("updateDatetime");
 		updateDateTime.setAccessible(true);
-		updateDateTime.set(fileEntity, LocalDateTime.now());
+		updateDateTime.set(imageEntity, LocalDateTime.now());
 
-		given(fileService.save(any(FilePostRequest.class))).willReturn(fileEntity);
+		given(imageService.save(any(ImagePostRequest.class))).willReturn(imageEntity);
 
 		// when
-		ResultActions resultActions = mockMvc.perform(multipart(Url.FILE)
+		ResultActions resultActions = mockMvc.perform(multipart(Url.IMAGE)
 						.file(file))
 				.andDo(print())
 				.andDo(document("post-file",
-						requestParts(partWithName("file").description("file parameter name")),
+						requestParts(partWithName("image").description("file parameter name")),
 						relaxedResponseFields(
-								fieldWithPath("data.fileId").description("파일 고유번호"),
+								fieldWithPath("data.imageId").description("파일 고유번호"),
 								fieldWithPath("data.memberId").description("회원 고유번호"),
-								fieldWithPath("data.fileType").description("파일 타입"),
+								fieldWithPath("data.type").description("파일 타입"),
 								fieldWithPath("data.targetId").description("타겟 도메인 ID"),
 								fieldWithPath("data.path").description("파일 URL"),
 								fieldWithPath("data.createDatetime").description("생성 날짜"),
@@ -115,9 +115,9 @@ class FileControllerTest {
 		// then
 		resultActions.andExpect(status().isOk());
 		resultActions.andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE));
-		resultActions.andExpect(jsonPath("data.fileId").isNotEmpty());
+		resultActions.andExpect(jsonPath("data.imageId").isNotEmpty());
 		resultActions.andExpect(jsonPath("data.memberId").isNotEmpty());
-		resultActions.andExpect(jsonPath("data.fileType").isEmpty());
+		resultActions.andExpect(jsonPath("data.type").isEmpty());
 		resultActions.andExpect(jsonPath("data.targetId").isEmpty());
 		resultActions.andExpect(jsonPath("data.path").isNotEmpty());
 		resultActions.andExpect(jsonPath("data.createDatetime").isNotEmpty());
@@ -125,14 +125,14 @@ class FileControllerTest {
 	}
 
 	@Test
-	@DisplayName("fail : file 이 누락된 경우 ")
+	@DisplayName("fail : image 가 누락된 경우 ")
 	void postFileIsFileNull() throws Exception {
 
 		// given
 		
 		
 		// when
-		ResultActions resultActions = mockMvc.perform(post(Url.FILE))
+		ResultActions resultActions = mockMvc.perform(post(Url.IMAGE))
 				.andDo(print());
 
 		// then
@@ -148,13 +148,13 @@ class FileControllerTest {
 
 		// given
 		MockMultipartFile file = new MockMultipartFile(
-				"file",
+				"image",
 				TestProperty.TXT_FILENAME,
 				MediaType.TEXT_PLAIN_VALUE,
 				resourceLoader.getResource(TestProperty.TXT_CLASSPATH).getInputStream());
 
 		// when
-		ResultActions resultActions = mockMvc.perform(multipart(Url.FILE)
+		ResultActions resultActions = mockMvc.perform(multipart(Url.IMAGE)
 						.file(file))
 				.andDo(print());
 

@@ -1,16 +1,14 @@
 package kr.toyauction.domain.product.service;
 
-import kr.toyauction.domain.member.entity.Member;
-import kr.toyauction.domain.product.repository.ProductRepository;
-import kr.toyauction.global.exception.DomainNotFoundException;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import kr.toyauction.domain.product.dto.ProductPostRequest;
 import kr.toyauction.domain.product.entity.Product;
 import kr.toyauction.domain.product.entity.ProductSttus;
+import kr.toyauction.domain.product.repository.ProductRepository;
+import kr.toyauction.global.exception.DomainNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +38,6 @@ public class ProductService {
                 .exchangeType(productPostRequest.getExchangeType())
                 .productCondition(productPostRequest.getProductCondition())
                 .detail(productPostRequest.getDetail())
-				.registerMemberId(1L) //임시로 registerId 임의값
                 .productSttus(ProductSttus.ON_SALE)
                 .build();
 

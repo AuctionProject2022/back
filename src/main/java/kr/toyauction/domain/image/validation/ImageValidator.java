@@ -1,7 +1,7 @@
-package kr.toyauction.domain.file.validation;
+package kr.toyauction.domain.image.validation;
 
-import kr.toyauction.domain.file.dto.FilePostRequest;
-import kr.toyauction.domain.file.error.FileErrorCode;
+import kr.toyauction.domain.image.dto.ImagePostRequest;
+import kr.toyauction.domain.image.error.ImageErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,20 +11,20 @@ import org.springframework.validation.Validator;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class FileValidator implements Validator {
+public class ImageValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return FilePostRequest.class.equals(clazz);
+		return ImagePostRequest.class.equals(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		if (target instanceof FilePostRequest) {
-			FilePostRequest request = (FilePostRequest) target;
-			if (request.getFile() != null) {
-				if (!enableContentTypes(request.getFile().getContentType())) {
-					errors.rejectValue("file", FileErrorCode.F0001.name(), new String[]{"jpg, png"}, null);
+		if (target instanceof ImagePostRequest) {
+			ImagePostRequest request = (ImagePostRequest) target;
+			if (request.getImage() != null) {
+				if (!enableContentTypes(request.getImage().getContentType())) {
+					errors.rejectValue("image", ImageErrorCode.F0001.name(), new String[]{"jpg, png"}, null);
 				}
 			}
 		}

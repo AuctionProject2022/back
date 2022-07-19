@@ -1,4 +1,4 @@
-package kr.toyauction.domain.file.dto;
+package kr.toyauction.domain.image.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,8 +10,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Builder
-public class FilePostRequest {
+public class ImagePostRequest {
 
-	@NotNull
-	private MultipartFile file;
+	@NotNull private MultipartFile image;
 }

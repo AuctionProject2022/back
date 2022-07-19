@@ -1,8 +1,8 @@
-package kr.toyauction.domain.file.service;
+package kr.toyauction.domain.image.service;
 
-import kr.toyauction.domain.file.dto.FilePostRequest;
-import kr.toyauction.domain.file.entity.FileEntity;
-import kr.toyauction.domain.file.repository.FileRepository;
+import kr.toyauction.domain.image.dto.ImagePostRequest;
+import kr.toyauction.domain.image.entity.ImageEntity;
+import kr.toyauction.domain.image.repository.ImageRepository;
 import kr.toyauction.global.property.TestProperty;
 import kr.toyauction.global.util.CommonUtils;
 import kr.toyauction.infra.aws.client.IntraAwsS3Client;
@@ -24,21 +24,21 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith({MockitoExtension.class})
-class FileServiceTest {
+class ImageServiceTest {
 
 	@Mock
-	FileRepository fileRepository;
+	ImageRepository imageRepository;
 
 	@Mock
 	IntraAwsS3Client intraAwsS3Client;
 
-	FileService fileService;
+	ImageService imageService;
 
 	ResourceLoader resourceLoader;
 
 	@BeforeEach
 	void setMemberService() {
-		fileService = new FileService(fileRepository, intraAwsS3Client);
+		imageService = new ImageService(imageRepository, intraAwsS3Client);
 		resourceLoader = new GenericWebApplicationContext();
 	}
 
@@ -48,21 +48,21 @@ class FileServiceTest {
 
 		// given
 		MockMultipartFile file = new MockMultipartFile(
-				"file",
+				"image",
 				TestProperty.PNG_FILENAME,
 				MediaType.IMAGE_PNG_VALUE,
 				resourceLoader.getResource(TestProperty.PNG_CLASSPATH).getInputStream());
-		FilePostRequest request = FilePostRequest.builder()
-				.file(file)
+		ImagePostRequest request = ImagePostRequest.builder()
+				.image(file)
 				.build();
-		given(fileRepository.save(any(FileEntity.class))).willReturn(FileEntity.builder()
+		given(imageRepository.save(any(ImageEntity.class))).willReturn(ImageEntity.builder()
 				.id(1L)
 				.memberId(0L)
 				.path(CommonUtils.generateS3PrefixKey() + file.getOriginalFilename())
 				.build());
 
 		// when
-		FileEntity saved = fileService.save(request);
+		ImageEntity saved = imageService.save(request);
 
 		// then
 		assertNotNull(saved.getId());
@@ -78,13 +78,13 @@ class FileServiceTest {
 
 		// given
 		MockMultipartFile file = null;
-		FilePostRequest request = FilePostRequest.builder()
-				.file(file)
+		ImagePostRequest request = ImagePostRequest.builder()
+				.image(file)
 				.build();
 
 		// when
 		assertThrows(NullPointerException.class, () -> {
-			fileService.save(request);
+			imageService.save(request);
 		});
 
 		// then
