@@ -12,6 +12,5 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class ImagePostRequest {
 
-	@NotNull
-	private MultipartFile image;
+	@NotNull private MultipartFile image;
 }

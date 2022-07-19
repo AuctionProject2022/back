@@ -1,8 +1,12 @@
 package kr.toyauction.domain.product.controller;
 
+import kr.toyauction.domain.product.dto.BidPostRequest;
+import kr.toyauction.domain.product.dto.BidPostResponse;
 import kr.toyauction.domain.product.dto.ProductPostRequest;
 import kr.toyauction.domain.product.dto.ProductPostResponse;
+import kr.toyauction.domain.product.entity.Bid;
 import kr.toyauction.domain.product.entity.Product;
+import kr.toyauction.domain.product.service.BidService;
 import kr.toyauction.domain.product.service.ProductService;
 import kr.toyauction.global.dto.SuccessResponse;
 import kr.toyauction.global.dto.SuccessResponseHelper;
@@ -19,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
 	private final ProductService productService;
+
+	private final BidService bidService;
 
 	@GetMapping(value = Url.PRODUCT + "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String getProduct(@PathVariable final Long productId) {
@@ -99,7 +105,7 @@ public class ProductController {
 		return result;
 	}
 
-	@DeleteMapping(value = Url.PRODUCT  + "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = Url.PRODUCT + "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String deleteProduct(@PathVariable final Long productId) {
 		String result = "{\n" +
 				"  \"success\": \"true\"\n" +
@@ -108,27 +114,21 @@ public class ProductController {
 		return result;
 	}
 
-	@PostMapping(value = Url.PRODUCT , produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = Url.PRODUCT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public SuccessResponse<ProductPostResponse> postProduct(@Validated @RequestBody final ProductPostRequest request) {
 		Product product = productService.registerProduct(request);
 		return SuccessResponseHelper.success(new ProductPostResponse(product));
 	}
 
-	@PostMapping(value = Url.PRODUCT  + "/bids", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String postBid() {
-		String result = "{\n" +
-				"  \"success\": \"true\",\n" +
-				"  \"data\": {\n" +
-				"    \"bidId\": 1,\n" +
-				"    \"createDatetime\": \"2022-06-19 21:48:55\",\n" +
-				"    \"updateDatetime\": \"2022-06-19 21:48:55\"\n" +
-				"  }\n" +
-				"}";
-		return result;
+
+	@PostMapping(value = Url.PRODUCT + "/{productId}" + "/bids", produces = MediaType.APPLICATION_JSON_VALUE)
+	public SuccessResponse<BidPostResponse> postBid(@PathVariable final Long productId, @Validated @RequestBody final BidPostRequest request) {
+		Bid bid = bidService.registerBid(productId, request);
+		return SuccessResponseHelper.success(new BidPostResponse(bid));
 	}
 
-	@GetMapping(value = Url.PRODUCT  + "/autocomplete", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String getAutoComplete(@RequestParam String prductName) {
+	@GetMapping(value = Url.PRODUCT + "/autocomplete", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String getAutoComplete(@RequestParam String productName) {
 		String result = "{\n" +
 				"  \"success\": \"true\",\n" +
 				"  \"data\": {\n" +
@@ -180,4 +180,6 @@ public class ProductController {
 
 		return result;
 	}
+
+
 }
