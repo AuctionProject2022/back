@@ -1,4 +1,4 @@
-package kr.toyauction.domain.file.entity;
+package kr.toyauction.domain.image.entity;
 
 import kr.toyauction.global.entity.BaseEntity;
 import kr.toyauction.global.entity.EntitySupport;
@@ -15,8 +15,8 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "file")
-public class FileEntity extends BaseEntity implements EntitySupport {
+@Table(name = "image")
+public class ImageEntity extends BaseEntity implements EntitySupport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class FileEntity extends BaseEntity implements EntitySupport {
 	private Long memberId;
 
 	@Enumerated(EnumType.STRING)
-	private FileType type;
+	private ImageType type;
 
 	private Long targetId;
 
