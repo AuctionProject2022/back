@@ -31,7 +31,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/**").hasRole("USER")// 모든 url 허용
+                .antMatchers("/**").permitAll()// 모든 url 허용
 
                 .and()
                 .oauth2Login()
